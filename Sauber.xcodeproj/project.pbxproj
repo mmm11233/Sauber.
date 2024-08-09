@@ -14,6 +14,7 @@
 		397EA3182C635B540020FE9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 397EA3162C635B540020FE9D /* LaunchScreen.storyboard */; };
 		39EB15812C636E5700C12DFA /* APIManagerProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15802C636E5600C12DFA /* APIManagerProviding.swift */; };
 		39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15832C636EAE00C12DFA /* EndpointRepository.swift */; };
+		39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		397EA3192C635B540020FE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39EB15802C636E5600C12DFA /* APIManagerProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManagerProviding.swift; sourceTree = "<group>"; };
 		39EB15832C636EAE00C12DFA /* EndpointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointRepository.swift; sourceTree = "<group>"; };
+		39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		39EB15872C637FDE00C12DFA /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				39F7260C2C65591500E3C5F8 /* HomeTableViewCell */,
 				397EA30F2C635B520020FE9D /* HomeViewController.swift */,
 			);
 			path = Home;
@@ -132,6 +135,14 @@
 				397EA30D2C635B520020FE9D /* SceneDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		39F7260C2C65591500E3C5F8 /* HomeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */,
+			);
+			path = HomeTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */,
 				397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */,
 				397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */,
 				397EA30E2C635B520020FE9D /* SceneDelegate.swift in Sources */,
