@@ -15,6 +15,7 @@
 		39EB15812C636E5700C12DFA /* APIManagerProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15802C636E5600C12DFA /* APIManagerProviding.swift */; };
 		39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15832C636EAE00C12DFA /* EndpointRepository.swift */; };
 		39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */; };
+		39F726112C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F726102C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		39EB15802C636E5600C12DFA /* APIManagerProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManagerProviding.swift; sourceTree = "<group>"; };
 		39EB15832C636EAE00C12DFA /* EndpointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointRepository.swift; sourceTree = "<group>"; };
 		39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		39F726102C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 		39EB15872C637FDE00C12DFA /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				39F7260F2C66AC1300E3C5F8 /* HomeCollectionViewCell */,
 				39F7260C2C65591500E3C5F8 /* HomeTableViewCell */,
 				397EA30F2C635B520020FE9D /* HomeViewController.swift */,
 			);
@@ -143,6 +146,14 @@
 				39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */,
 			);
 			path = HomeTableViewCell;
+			sourceTree = "<group>";
+		};
+		39F7260F2C66AC1300E3C5F8 /* HomeCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				39F726102C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift */,
+			);
+			path = HomeCollectionViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39F726112C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift in Sources */,
 				39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */,
 				397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */,
 				397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */,
