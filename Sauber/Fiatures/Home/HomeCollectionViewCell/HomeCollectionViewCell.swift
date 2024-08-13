@@ -5,8 +5,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private var movieImage: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFit
-        image.image = UIImage(systemName: "multiply.circle.fill")
+        image.contentMode = .scaleToFill
+        image.image = UIImage(named: "red")
+        image.layer.cornerRadius = 10
+        image.layer.masksToBounds = true
+
         image.translatesAutoresizingMaskIntoConstraints = false
         
         return image
@@ -15,7 +18,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private var movieName: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
-        label.text = "Drakula"
+        label.text = "Peaky Blinders"
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -42,8 +46,16 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            movieImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            movieImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            movieImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            movieImage.heightAnchor.constraint(equalToConstant: 150),
+            movieImage.widthAnchor.constraint(equalToConstant: 100),
             
+            movieName.bottomAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: -10),
+            movieName.leadingAnchor.constraint(equalTo: movieImage.leadingAnchor, constant: 10),
+            movieName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
-    
 }

@@ -5,6 +5,7 @@ final class HomeViewController: UIViewController {
     
     private var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
@@ -14,6 +15,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Home"
         setupView()
         setupConstraints()
         setupTableView()
@@ -22,17 +24,16 @@ final class HomeViewController: UIViewController {
     //MARK: - Setup
     
     private func setupView() {
-        view.backgroundColor = .green
+        view.backgroundColor = .white
         view.addSubview(tableView)
-        tableView.backgroundColor = .red
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate ([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12)
         ])
     }
     
@@ -47,15 +48,16 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        2
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
-        if let HomeTableViewControllerCell = cell as? HomeTableViewCell {
+        if let homeCell = cell as? HomeTableViewCell {
             
-            return HomeTableViewControllerCell
+            return homeCell
         }
-    
+        
         return cell
     }
 }
