@@ -1,8 +1,8 @@
-//
-//  HomeTableViewCellModel.swift
-//  Sauber
-//
-//  Created by Mariam Joglidze on 21/08/2024.
-//
-
 import Foundation
+
+struct HomeTableViewCellModel {
+    let moviesResponse: MoviesResponse
+    let movirGenreName: String 
+    let movieName: String
+    let movieImage: String
+}

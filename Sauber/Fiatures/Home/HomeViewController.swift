@@ -1,7 +1,12 @@
 import UIKit
+import Combine
 
 final class HomeViewController: UIViewController {
+    
     //MARK: - Properties
+    
+    private var viewModel: HomeViewModel
+    private var subscribers = Set<AnyCancellable>()
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -11,6 +16,17 @@ final class HomeViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: - Initalizer
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -19,6 +35,8 @@ final class HomeViewController: UIViewController {
         setupView()
         setupConstraints()
         setupTableView()
+        setupBindigs()
+        viewModel.ViewDidLoad()
     }
     
     //MARK: - Setup
@@ -26,6 +44,14 @@ final class HomeViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .white
         view.addSubview(tableView)
+    }
+    
+    private func setupBindigs() {
+        viewModel.moviesDidLoadPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.tableView.reloadData()
+            }.store(in: &subscribers)
     }
     
     private func setupConstraints() {
@@ -44,6 +70,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
+
 // MARK: - Table View Data Source And Delegate
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -52,8 +79,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
-        if let homeCell = cell as? HomeTableViewCell {
+        if let homeCell = cell as? HomeTableViewCell,
+           let movie = viewModel.item(at: indexPath.row) {
+            homeCell.configure(with: movie)
             
             return homeCell
         }

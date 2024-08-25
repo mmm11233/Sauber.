@@ -4,7 +4,7 @@ protocol NetworkService {
     func fetchData<T: Decodable>(from url: URL, completion: @escaping (Result<T, Error>) -> Void)
 }
 
-class NetworkManager: NetworkService {
+final class NetworkManager: NetworkService {
     private let urlSession: URLSession
     private let parser: DataParser
     

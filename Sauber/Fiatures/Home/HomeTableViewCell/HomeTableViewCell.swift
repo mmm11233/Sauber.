@@ -3,11 +3,14 @@ import UIKit
 final class HomeTableViewCell: UITableViewCell {
     
     //MARK: - Properties
+    
+    var model: HomeTableViewCellModel?
+    
     private var moviesGenreName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .darkGray
-        label.text = "Top rated"
+        label.textColor = .black
+        label.text = ""
         label.translatesAutoresizingMaskIntoConstraints =  false
         
         return label
@@ -38,6 +41,7 @@ final class HomeTableViewCell: UITableViewCell {
     }()
     
     //MARK: - Initializer
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -53,13 +57,24 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     // MARK: - Prepare For Reuse
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
         moviesGenreName.text = nil
     }
     
+    // MARK: - Configuration
+    
+    func configure(with model: HomeTableViewCellModel) {
+        self.model = model
+        moviesGenreName.text = model.moviesResponse.results.first?.name
+
+        collectionView.reloadData()
+    }
+    
     //MARK: - setupView
+    
     private func setupView() {
         contentView.addSubview(moviesGenreName)
         contentView.addSubview(allMoviesButton)
@@ -74,13 +89,15 @@ final class HomeTableViewCell: UITableViewCell {
         collectionView.reloadData()
     }
     
+    
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             moviesGenreName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             moviesGenreName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             moviesGenreName.trailingAnchor.constraint(equalTo: allMoviesButton.leadingAnchor, constant: -12),
             moviesGenreName.bottomAnchor.constraint(equalTo: allMoviesButton.bottomAnchor),
-
+            
             
             allMoviesButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             allMoviesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
@@ -96,12 +113,14 @@ final class HomeTableViewCell: UITableViewCell {
 
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        6
+        model?.moviesResponse.results.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath)
-        if let HomeCollectionViewControllerCell = cell as? HomeCollectionViewCell {
+        if let HomeCollectionViewControllerCell = cell as? HomeCollectionViewCell,
+           let movie = model?.moviesResponse.results[indexPath.row] {
+            HomeCollectionViewControllerCell.configure(with: movie)
             
             return HomeCollectionViewControllerCell
         }
