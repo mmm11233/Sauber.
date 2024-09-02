@@ -83,11 +83,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
         if let homeCell = cell as? HomeTableViewCell,
            let movie = viewModel.item(at: indexPath.row) {
-            homeCell.configure(with: movie)
+            homeCell.configure(with: movie, delegate: self)
             
             return homeCell
         }
         
         return cell
+    }
+}
+
+extension HomeViewController: HomeTableViewCellDelegate {
+    func didSelectRowAt(at index: Int) {
+        viewModel.didSelectRowAt(at: index, from: self)
     }
 }

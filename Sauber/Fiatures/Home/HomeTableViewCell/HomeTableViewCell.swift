@@ -1,10 +1,15 @@
 import UIKit
 
+protocol HomeTableViewCellDelegate: AnyObject {
+    func didSelectRowAt(at index: Int)
+}
+
 final class HomeTableViewCell: UITableViewCell {
     
     //MARK: - Properties
     
-    var model: HomeTableViewCellModel?
+    private var model: HomeTableViewCellModel?
+    private weak var delegate: HomeTableViewCellDelegate?
     
     private var moviesGenreName: UILabel = {
         let label = UILabel()
@@ -29,7 +34,7 @@ final class HomeTableViewCell: UITableViewCell {
         return button
     }()
     
-    var collectionView: UICollectionView = {
+    private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -66,10 +71,11 @@ final class HomeTableViewCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    func configure(with model: HomeTableViewCellModel) {
+    func configure(with model: HomeTableViewCellModel, delegate: HomeTableViewCellDelegate) {
+        self.delegate = delegate
         self.model = model
         moviesGenreName.text = model.moviesResponse.results.first?.name
-
+        
         collectionView.reloadData()
     }
     
@@ -88,8 +94,6 @@ final class HomeTableViewCell: UITableViewCell {
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
     }
-    
-    
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -135,5 +139,9 @@ extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelectRowAt(at: indexPath.row)
     }
 }

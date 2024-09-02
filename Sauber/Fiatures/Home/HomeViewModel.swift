@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import Combine
 
 //MARK: - Home View Model
@@ -8,6 +9,8 @@ protocol HomeViewModel {
     func ViewDidLoad()
     func numberOfRowsInSection() -> Int
     func item(at index: Int) -> HomeTableViewCellModel?
+    func didSelectRowAt(at index: Int, from viewController: UIViewController)
+
 }
 
 //MARK: - Home View Model Impl
@@ -43,6 +46,12 @@ final class HomeViewModelImpl: HomeViewModel {
         }
         
         return nil
+    }
+    
+    // MARK: User Interaction
+    func didSelectRowAt(at index: Int, from viewController: UIViewController) {
+        let vc = MoviesDetailsViewController()
+        viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
     func fetchMovies() {

@@ -1,6 +1,6 @@
 import UIKit
 
-final class DetailsViewController: UIViewController {
+final class MoviesDetailsViewController: UIViewController {
     // MARK: - Properties
     
     private let scrollView: UIScrollView = {
@@ -84,6 +84,7 @@ final class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationItem.title = "Details"
         setupView()
         addSubviews()
         setupContraints()
@@ -98,7 +99,6 @@ final class DetailsViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContent)
-        
         scrollViewContent.addSubview(imageView)
         scrollViewContent.addSubview(stackView)
         
@@ -128,8 +128,7 @@ final class DetailsViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor, constant: -16),
             stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 34),
-            stackView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor),
-            
+            stackView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor)
         ])
     }
 }
