@@ -2,16 +2,17 @@ import Foundation
 
 struct EndpointRepository {
     // MARK: - BaseURL
+    private static var apiKey = "5640b394ad4d380d373cddff07791a1c"
     
-    private let host = "https://api.themoviedb.org/3"
+    private static let host = "https://api.themoviedb.org/3"
     
     // MARK: - Endpoints
     
-    var topRatedEndpoint: String {
-        "\(host)/tv/top_rated"
+    static var topRatedEndpoint: String {
+        "\(host)/tv/top_rated?api_key=\(apiKey)"
     }
     
-    var popularEndpoint: String {
+    static var popularEndpoint: String {
         "\(host)/tv/popular"
     }
 }

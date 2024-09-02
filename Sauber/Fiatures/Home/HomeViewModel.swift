@@ -55,7 +55,7 @@ final class HomeViewModelImpl: HomeViewModel {
     }
     
     func fetchMovies() {
-        if let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=5640b394ad4d380d373cddff07791a1c"){
+        if let url = URL(string: EndpointRepository.topRatedEndpoint) {
             
             networkManager.fetchData(from: url) { [weak self] (result: Result<MoviesResponse, Error>) in
                 guard let self else { return }
