@@ -1,10 +1,3 @@
-//
-//  UIImageView+Extension.swift
-//  Sauber
-//
-//  Created by Mariam Joglidze on 02/09/2024.
-//
-
 import UIKit
 
 extension UIImageView {

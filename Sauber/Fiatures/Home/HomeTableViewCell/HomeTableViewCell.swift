@@ -115,6 +115,7 @@ final class HomeTableViewCell: UITableViewCell {
     }
 }
 
+
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         model?.moviesResponse.results.count ?? 0

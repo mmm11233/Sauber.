@@ -50,7 +50,7 @@ final class HomeViewModelImpl: HomeViewModel {
     
     // MARK: User Interaction
     func didSelectRowAt(at index: Int, from viewController: UIViewController) {
-        let vc = MoviesDetailsViewController()
+        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: (movieResponse?.results[index])!))
         viewController.navigationController?.pushViewController(vc, animated: true)
     }
     

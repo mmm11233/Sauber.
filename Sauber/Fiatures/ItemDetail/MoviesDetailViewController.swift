@@ -69,14 +69,18 @@ final class MoviesDetailsViewController: UIViewController {
         return label
     }()
     
+    private var viewModel: MoviesDetailViewModel
+    
+    
     // MARK: - Initalizer
     
-    init() {
+    init(viewModel: MoviesDetailViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - LifeCycle
@@ -88,47 +92,60 @@ final class MoviesDetailsViewController: UIViewController {
         setupView()
         addSubviews()
         setupContraints()
+        configureViews()
     }
     
-    //MARK: - setupView
+    // MARK: - Configuration
     
-    private func setupView() {
-        navigationController?.navigationBar.prefersLargeTitles = false
+    private func configureViews() {
+        //        if let imageURL = URL(string: viewModel.selectedDish.pictureURL) {
+        //            startLoading()
+        //
+        //            downloadImage(from: imageURL)
+        titleLabel.text = viewModel.getTitle()
+        subTitleLabel.text = viewModel.getSubtitle()
+        descriptionLabel.text = viewModel.getDescription()
     }
+
+//MARK: - setupView
+
+private func setupView() {
+    navigationController?.navigationBar.prefersLargeTitles = false
+}
+
+private func addSubviews() {
+    view.addSubview(scrollView)
+    scrollView.addSubview(scrollViewContent)
+    scrollViewContent.addSubview(imageView)
+    scrollViewContent.addSubview(stackView)
     
-    private func addSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(scrollViewContent)
-        scrollViewContent.addSubview(imageView)
-        scrollViewContent.addSubview(stackView)
+    stackView.addArrangedSubview(titleLabel)
+    stackView.addArrangedSubview(subTitleLabel)
+    stackView.addArrangedSubview(descriptionLabel)
+}
+
+private func setupContraints() {
+    NSLayoutConstraint.activate([
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(subTitleLabel)
-        stackView.addArrangedSubview(descriptionLabel)
-    }
-    
-    private func setupContraints() {
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            scrollViewContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            scrollViewContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            scrollViewContent.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            scrollViewContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            scrollViewContent.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            
-            imageView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: scrollViewContent.topAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: view.frame.width),
-            
-            stackView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 34),
-            stackView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor)
-        ])
-    }
+        scrollViewContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+        scrollViewContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+        scrollViewContent.topAnchor.constraint(equalTo: scrollView.topAnchor),
+        scrollViewContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+        scrollViewContent.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+        
+        imageView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor),
+        imageView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor),
+        imageView.topAnchor.constraint(equalTo: scrollViewContent.topAnchor),
+        imageView.heightAnchor.constraint(equalToConstant: view.frame.width),
+        
+        stackView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor, constant: 16),
+        stackView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor, constant: -16),
+        stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 34),
+        stackView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor)
+    ])
+}
 }
