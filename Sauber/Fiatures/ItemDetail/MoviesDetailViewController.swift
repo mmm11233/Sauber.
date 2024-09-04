@@ -32,7 +32,6 @@ final class MoviesDetailsViewController: UIViewController {
     private let imageView: UIImageView = {
         var image = UIImageView()
         image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "red")
         image.translatesAutoresizingMaskIntoConstraints = false
         
         return image
@@ -42,7 +41,6 @@ final class MoviesDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 30, weight: .bold)
         label.textColor = .black
-        label.text = "Init"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -52,7 +50,6 @@ final class MoviesDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .black
-        label.text = "Types of Init"
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -62,7 +59,6 @@ final class MoviesDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
-        label.text = "Designated Initializers: Main initializers that ensure all properties are initialized and call the superclass initializer.Convenience Initializers: Secondary initializers that provide additional ways to initialize a class, calling another initializer within the same class.Required Initializers: Enforced initializers that must be implemented by subclasses, often used in protocol conformance.ravici meti swiftze vwer cods  esignated Initializers: Main initializers that ensure all properties are initialized and call the superclass initializer.Convenience Initializers: Secondary initializers that provide additional ways to initialize a class, calling another initializer within the same class.Required Initializers: Enforced initializers that must be implemented by subclasses, often used in protocol conformance"
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -70,7 +66,6 @@ final class MoviesDetailsViewController: UIViewController {
     }()
     
     private var viewModel: MoviesDetailViewModel
-    
     
     // MARK: - Initalizer
     
@@ -92,60 +87,61 @@ final class MoviesDetailsViewController: UIViewController {
         setupView()
         addSubviews()
         setupContraints()
-        configureViews()
+        configureView()
     }
     
     // MARK: - Configuration
     
-    private func configureViews() {
-        //        if let imageURL = URL(string: viewModel.selectedDish.pictureURL) {
-        //            startLoading()
-        //
-        //            downloadImage(from: imageURL)
+   private func configureView() {
+        if let posterPath = viewModel.selectedMovie.posterPath,
+           let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)") {
+            imageView.loadImage(from: url)
+        }
         titleLabel.text = viewModel.getTitle()
         subTitleLabel.text = viewModel.getSubtitle()
         descriptionLabel.text = viewModel.getDescription()
     }
-
-//MARK: - setupView
-
-private func setupView() {
-    navigationController?.navigationBar.prefersLargeTitles = false
-}
-
-private func addSubviews() {
-    view.addSubview(scrollView)
-    scrollView.addSubview(scrollViewContent)
-    scrollViewContent.addSubview(imageView)
-    scrollViewContent.addSubview(stackView)
     
-    stackView.addArrangedSubview(titleLabel)
-    stackView.addArrangedSubview(subTitleLabel)
-    stackView.addArrangedSubview(descriptionLabel)
-}
-
-private func setupContraints() {
-    NSLayoutConstraint.activate([
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+    
+    //MARK: - setupView
+    
+    private func setupView() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    private func addSubviews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(scrollViewContent)
+        scrollViewContent.addSubview(imageView)
+        scrollViewContent.addSubview(stackView)
         
-        scrollViewContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-        scrollViewContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-        scrollViewContent.topAnchor.constraint(equalTo: scrollView.topAnchor),
-        scrollViewContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-        scrollViewContent.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-        
-        imageView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor),
-        imageView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor),
-        imageView.topAnchor.constraint(equalTo: scrollViewContent.topAnchor),
-        imageView.heightAnchor.constraint(equalToConstant: view.frame.width),
-        
-        stackView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor, constant: 16),
-        stackView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor, constant: -16),
-        stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 34),
-        stackView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor)
-    ])
-}
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(subTitleLabel)
+        stackView.addArrangedSubview(descriptionLabel)
+    }
+    
+    private func setupContraints() {
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            scrollViewContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollViewContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            scrollViewContent.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollViewContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            scrollViewContent.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            imageView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: scrollViewContent.topAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: view.frame.width),
+            
+            stackView.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor, constant: -16),
+            stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 98),
+            stackView.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor)
+        ])
+    }
 }

@@ -4,18 +4,16 @@ import Combine
 
 //MARK: - Home View Model
 
-protocol HomeViewModel {
+protocol HomeViewModelProviding {
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { get }
-    func ViewDidLoad()
     func numberOfRowsInSection() -> Int
     func item(at index: Int) -> HomeTableViewCellModel?
     func didSelectRowAt(at index: Int, from viewController: UIViewController)
-
 }
 
-//MARK: - Home View Model Impl
+//MARK: - Home View Model
 
-final class HomeViewModelImpl: HomeViewModel {
+final class HomeViewModel: HomeViewModelProviding {
     
     //MARK: - Properties
     
@@ -32,10 +30,6 @@ final class HomeViewModelImpl: HomeViewModel {
         self.networkManager = networkManager
     }
     
-    func ViewDidLoad() {
-        fetchMovies()
-    }
-    
     func numberOfRowsInSection() -> Int {
         movieResponse?.results.count ?? 0
     }
@@ -48,15 +42,17 @@ final class HomeViewModelImpl: HomeViewModel {
         return nil
     }
     
-    // MARK: User Interaction
+    // MARK: User - Interaction
+    
     func didSelectRowAt(at index: Int, from viewController: UIViewController) {
         let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: (movieResponse?.results[index])!))
         viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
+    //notcorrect
     func fetchMovies() {
         if let url = URL(string: EndpointRepository.topRatedEndpoint) {
-            
+            //
             networkManager.fetchData(from: url) { [weak self] (result: Result<MoviesResponse, Error>) in
                 guard let self else { return }
                 switch result {

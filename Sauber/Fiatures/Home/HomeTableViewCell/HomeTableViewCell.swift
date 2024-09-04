@@ -115,7 +115,7 @@ final class HomeTableViewCell: UITableViewCell {
     }
 }
 
-
+//ცალკე ფაილში გავიტანო ქოლექშენ ვიუ. საუბერქოლექშენვიუ. 
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         model?.moviesResponse.results.count ?? 0

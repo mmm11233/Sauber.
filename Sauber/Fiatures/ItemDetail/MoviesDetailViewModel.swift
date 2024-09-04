@@ -1,42 +1,36 @@
 import UIKit
 
-// MARK: - Movies Details View Model
-
-protocol MoviesDetailViewModel {
-    var selectedMovie: Movie { get }
-    
-    func getTitle() -> String
-    func getSubtitle() -> String
-    func getDescription() -> String
-    
-//    func downloadImage(from url: URL,  completion: @escaping (UIImage?) -> Void)
-}
-
 // MARK: - Movies Details View Model Impl
-final class MoviesDetailsViewModelImpl: MoviesDetailViewModel {
+final class MoviesDetailsViewModelImpl {
     var selectedMovie: Movie
     
-    init(selectedMovie: Movie) {
+    init(
+        selectedMovie: Movie
+    ) {
         self.selectedMovie = selectedMovie
     }
     
     func getTitle() -> String {
-        selectedMovie.originalName ?? "Mariami"
+        selectedMovie.originalName ?? ""
     }
     
     func getSubtitle() -> String {
-        selectedMovie.name ?? "Mariami"
+        selectedMovie.name ?? ""
     }
     
     func getDescription() -> String {
-        selectedMovie.overview ?? "Mariam Joglidze"
+        selectedMovie.overview ?? "empty description"
     }
     
-//    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-//        <#code#>
-//    }
-    
-    
+    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+        func downloadImage(from url: URL,  completion: @escaping (UIImage?) -> Void) {
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                if let data = data {
+                    completion((UIImage(data: data)))
+                } else {
+                    completion(nil)
+                }
+            }.resume()
+        }
+    }
 }
-
-
