@@ -16,8 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let someScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: someScene)
+<<<<<<< HEAD
 //         let firstVC = DetailsViewController()
         let firstVC = HomeViewController(viewModel: HomeViewModelImpl(networkManager: NetworkManager()))
+=======
+        let firstVC = HomeViewController()
+>>>>>>> main
         let someNavigationController = UINavigationController(rootViewController: firstVC)
         window?.rootViewController = someNavigationController
         window?.makeKeyAndVisible()

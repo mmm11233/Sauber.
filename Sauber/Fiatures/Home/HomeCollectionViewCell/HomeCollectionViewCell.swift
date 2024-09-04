@@ -9,6 +9,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
         image.image = UIImage(named: "red")
         image.layer.cornerRadius = 10
         image.layer.masksToBounds = true
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
         image.translatesAutoresizingMaskIntoConstraints = false
         
         return image
@@ -43,6 +47,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         addSubview(movieName)
     }
     
+<<<<<<< HEAD
     func configure(with model: Movie) {
         movieName.text = model.originalName
         movieImage.image = model.posterPath?.image
@@ -52,6 +57,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }
     }
     
+=======
+>>>>>>> main
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             movieImage.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -67,8 +74,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
         ])
     }
 }
+<<<<<<< HEAD
 
 
 public extension String {
     var image: UIImage? { get { return UIImage(named: self) } }
 }
+=======
+>>>>>>> main
