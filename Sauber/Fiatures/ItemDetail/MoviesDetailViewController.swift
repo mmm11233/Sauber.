@@ -65,11 +65,11 @@ final class MoviesDetailsViewController: UIViewController {
         return label
     }()
     
-    private var viewModel: MoviesDetailViewModel
+    private var viewModel: MoviesDetailsViewModelImpl
     
     // MARK: - Initalizer
     
-    init(viewModel: MoviesDetailViewModel) {
+    init(viewModel: MoviesDetailsViewModelImpl) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

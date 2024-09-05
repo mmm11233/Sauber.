@@ -28,6 +28,8 @@ final class HomeViewModel: HomeViewModelProviding {
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
+        //not in here
+        fetchMovies()
     }
     
     func numberOfRowsInSection() -> Int {

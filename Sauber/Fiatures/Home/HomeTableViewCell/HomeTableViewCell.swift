@@ -1,6 +1,6 @@
 import UIKit
 
-<<<<<<< HEAD
+
 protocol HomeTableViewCellDelegate: AnyObject {
     func didSelectRowAt(at index: Int)
 }
@@ -8,25 +8,14 @@ protocol HomeTableViewCellDelegate: AnyObject {
 final class HomeTableViewCell: UITableViewCell {
     
     //MARK: - Properties
-    
     private var model: HomeTableViewCellModel?
     private weak var delegate: HomeTableViewCellDelegate?
     
     private var moviesGenreName: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .black
-        label.text = ""
-=======
-final class HomeTableViewCell: UITableViewCell {
-    
-    //MARK: - Properties
-    private var moviesGenreName: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .darkGray
         label.text = "Top rated"
->>>>>>> main
         label.translatesAutoresizingMaskIntoConstraints =  false
         
         return label
@@ -45,26 +34,21 @@ final class HomeTableViewCell: UITableViewCell {
         return button
     }()
     
-<<<<<<< HEAD
+    
     private var collectionView: UICollectionView = {
-=======
-    var collectionView: UICollectionView = {
->>>>>>> main
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            
+            let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+            cv.translatesAutoresizingMaskIntoConstraints = false
+            
+            return cv
         
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        
-        return cv
     }()
     
     //MARK: - Initializer
-<<<<<<< HEAD
     
-=======
->>>>>>> main
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -80,17 +64,12 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     // MARK: - Prepare For Reuse
-<<<<<<< HEAD
-    
-=======
->>>>>>> main
     override func prepareForReuse() {
         super.prepareForReuse()
         
         moviesGenreName.text = nil
     }
     
-<<<<<<< HEAD
     // MARK: - Configuration
     
     func configure(with model: HomeTableViewCellModel, delegate: HomeTableViewCellDelegate) {
@@ -101,11 +80,8 @@ final class HomeTableViewCell: UITableViewCell {
         collectionView.reloadData()
     }
     
-    //MARK: - setupView
     
-=======
     //MARK: - setupView
->>>>>>> main
     private func setupView() {
         contentView.addSubview(moviesGenreName)
         contentView.addSubview(allMoviesButton)
@@ -126,11 +102,6 @@ final class HomeTableViewCell: UITableViewCell {
             moviesGenreName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             moviesGenreName.trailingAnchor.constraint(equalTo: allMoviesButton.leadingAnchor, constant: -12),
             moviesGenreName.bottomAnchor.constraint(equalTo: allMoviesButton.bottomAnchor),
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> main
             
             allMoviesButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             allMoviesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
@@ -144,47 +115,50 @@ final class HomeTableViewCell: UITableViewCell {
     }
 }
 
-<<<<<<< HEAD
-//ცალკე ფაილში გავიტანო ქოლექშენ ვიუ. საუბერქოლექშენვიუ. 
-extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        model?.moviesResponse.results.count ?? 0
-=======
+
+//ცალკე ფაილში გავიტანო ქოლექშენ ვიუ. საუბერქოლექშენვიუ.
+//extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        model?.moviesResponse.results.count ?? 0
+//    }
+
+
+
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         6
->>>>>>> main
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Dequeue the reusable cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath)
-<<<<<<< HEAD
-        if let HomeCollectionViewControllerCell = cell as? HomeCollectionViewCell,
+        
+        // Safely cast to your custom cell class
+        if let homeCollectionViewCell = cell as? HomeCollectionViewCell,
            let movie = model?.moviesResponse.results[indexPath.row] {
-            HomeCollectionViewControllerCell.configure(with: movie)
-=======
-        if let HomeCollectionViewControllerCell = cell as? HomeCollectionViewCell {
->>>>>>> main
-            
-            return HomeCollectionViewControllerCell
+            // Configure the cell with the movie object
+            homeCollectionViewCell.configure(with: movie)
         }
         
+        // Return the cell
         return cell
     }
+
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         CGSize(width: 100, height: collectionView.frame.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        20
-    }
-<<<<<<< HEAD
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        20
+//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didSelectRowAt(at: indexPath.row)
     }
-=======
->>>>>>> main
+    
 }
+
+
