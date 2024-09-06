@@ -1,6 +1,6 @@
 import UIKit
 
-class MooviesListViewController: UIViewController {
+final class MoviesListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
