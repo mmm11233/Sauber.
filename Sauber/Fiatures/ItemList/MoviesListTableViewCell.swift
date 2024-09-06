@@ -9,7 +9,7 @@ import UIKit
 
 class MoviesListTableViewCell: UITableViewCell {
     
-    //MARK: - Properties
+    // MARK: - Properties
     private var moviesTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
