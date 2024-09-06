@@ -60,7 +60,7 @@ class MoviesListTableViewCell: UITableViewCell {
 
     }
     
-    private func setupView() {
+    private func setUpSubView() {
         contentView.addSubview(moviesTitleLabel)
         contentView.addSubview(moviesRatingLabel)
         contentView.addSubview(moviesOverviewLabel)
