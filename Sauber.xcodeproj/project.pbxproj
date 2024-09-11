@@ -14,6 +14,7 @@
 		3915B1462C751B8C00EFEE76 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915B1452C751B8C00EFEE76 /* HomeViewModel.swift */; };
 		396E79E32C91AEAD00285984 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396E79E22C91AEAD00285984 /* MoviesListViewController.swift */; };
 		396E79E52C91AEC200285984 /* MoviesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396E79E42C91AEC200285984 /* MoviesListTableViewCell.swift */; };
+		396E79E72C91E5F400285984 /* MoviesListTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396E79E62C91E5F400285984 /* MoviesListTableViewCellModel.swift */; };
 		397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30B2C635B520020FE9D /* AppDelegate.swift */; };
 		397EA30E2C635B520020FE9D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30D2C635B520020FE9D /* SceneDelegate.swift */; };
 		397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30F2C635B520020FE9D /* HomeViewController.swift */; };
@@ -23,7 +24,7 @@
 		39C392952C7BC96400751A9B /* MoviesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392942C7BC96400751A9B /* MoviesDetailViewController.swift */; };
 		39C392982C864C9C00751A9B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392972C864C9C00751A9B /* UIImageView+Extension.swift */; };
 		39C3929E2C865A0100751A9B /* MoviesDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3929D2C865A0100751A9B /* MoviesDetailViewModel.swift */; };
-		39C392A12C888DBA00751A9B /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392A02C888DBA00751A9B /* HomeService.swift */; };
+		39C392A12C888DBA00751A9B /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392A02C888DBA00751A9B /* Services.swift */; };
 		39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15832C636EAE00C12DFA /* EndpointRepository.swift */; };
 		39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */; };
 		39F726112C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F726102C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift */; };
@@ -37,6 +38,7 @@
 		3915B1452C751B8C00EFEE76 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		396E79E22C91AEAD00285984 /* MoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
 		396E79E42C91AEC200285984 /* MoviesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListTableViewCell.swift; sourceTree = "<group>"; };
+		396E79E62C91E5F400285984 /* MoviesListTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListTableViewCellModel.swift; sourceTree = "<group>"; };
 		397EA3082C635B520020FE9D /* Sauber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sauber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		397EA30B2C635B520020FE9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		397EA30D2C635B520020FE9D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +50,7 @@
 		39C392942C7BC96400751A9B /* MoviesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailViewController.swift; sourceTree = "<group>"; };
 		39C392972C864C9C00751A9B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		39C3929D2C865A0100751A9B /* MoviesDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailViewModel.swift; sourceTree = "<group>"; };
-		39C392A02C888DBA00751A9B /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		39C392A02C888DBA00751A9B /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		39EB15832C636EAE00C12DFA /* EndpointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointRepository.swift; sourceTree = "<group>"; };
 		39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		39F726102C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			children = (
 				396E79E42C91AEC200285984 /* MoviesListTableViewCell.swift */,
 				396E79E22C91AEAD00285984 /* MoviesListViewController.swift */,
+				396E79E62C91E5F400285984 /* MoviesListTableViewCellModel.swift */,
 			);
 			path = "ItemList ";
 			sourceTree = "<group>";
@@ -124,7 +127,7 @@
 		39C3929F2C888D8700751A9B /* MoviesService */ = {
 			isa = PBXGroup;
 			children = (
-				39C392A02C888DBA00751A9B /* HomeService.swift */,
+				39C392A02C888DBA00751A9B /* Services.swift */,
 			);
 			path = MoviesService;
 			sourceTree = "<group>";
@@ -289,11 +292,12 @@
 				3915B1462C751B8C00EFEE76 /* HomeViewModel.swift in Sources */,
 				3915B13D2C731E5B00EFEE76 /* NetworkError.swift in Sources */,
 				39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */,
-				39C392A12C888DBA00751A9B /* HomeService.swift in Sources */,
+				39C392A12C888DBA00751A9B /* Services.swift in Sources */,
 				396E79E32C91AEAD00285984 /* MoviesListViewController.swift in Sources */,
 				39C283DE2C762F410073C8B5 /* HomeTableViewCellModel.swift in Sources */,
 				397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */,
 				3915B1422C731F6B00EFEE76 /* Movie.swift in Sources */,
+				396E79E72C91E5F400285984 /* MoviesListTableViewCellModel.swift in Sources */,
 				397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */,
 				397EA30E2C635B520020FE9D /* SceneDelegate.swift in Sources */,
 				39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */,

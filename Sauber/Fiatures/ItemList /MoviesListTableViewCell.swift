@@ -64,6 +64,11 @@ final class MoviesListTableViewCell: UITableViewCell {
         
     }
     
+    // MARK: - Configuration
+    private func configure(with item: MoviesResponse) {
+        moviesTitleLabel.text = item.results.
+    }
+
     // MARK: - Setup
 
     private func setUpSubView() {

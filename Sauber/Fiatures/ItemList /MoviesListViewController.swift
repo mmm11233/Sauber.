@@ -4,6 +4,8 @@ import UIKit
 final class MoviesListViewController: UIViewController {
     
     //MARK: - Properties
+    private let service = Services(networkmanager: NetworkManager())
+    private let movies: [MoviesResponse] = []
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -20,6 +22,8 @@ final class MoviesListViewController: UIViewController {
         setupView()
         setupConstraints()
         setupTableView()
+        
+        service.fetchPopularMovies()
     }
     
     //MARK: - Setup
