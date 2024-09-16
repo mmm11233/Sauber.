@@ -45,11 +45,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     func configure(with model: Movie) {
         movieName.text = model.originalName
-        movieImage.image = model.posterPath?.image
-        if let posterPath = model.posterPath,
-           let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)") {
-            movieImage.loadImage(from: url)
-        }
+        movieImage.loadImageUsingCacheWithURL(posterPath: model.posterPath)
     }
     
     private func setupConstraints() {

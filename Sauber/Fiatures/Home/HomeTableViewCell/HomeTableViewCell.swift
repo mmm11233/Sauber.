@@ -1,15 +1,17 @@
 import UIKit
 
-
 protocol HomeTableViewCellDelegate: AnyObject {
+    func seeAllTapped(in section: Int)
     func didSelectRowAt(at index: Int)
 }
 
 final class HomeTableViewCell: UITableViewCell {
     
     //MARK: - Properties
-    private var model: HomeTableViewCellModel?
-    private weak var delegate: HomeTableViewCellDelegate?
+    
+    private var model: HomeTableViewCellMovieModel?
+    private weak var detailsDelegate: HomeTableViewCellDelegate?
+    private var section: Int?
     
     private var moviesGenreName: UILabel = {
         let label = UILabel()
@@ -17,7 +19,6 @@ final class HomeTableViewCell: UITableViewCell {
         label.textColor = .darkGray
         label.text = "Top rated"
         label.translatesAutoresizingMaskIntoConstraints =  false
-        
         return label
     }()
     
@@ -29,22 +30,19 @@ final class HomeTableViewCell: UITableViewCell {
         let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
         let underlineAttributedString = NSAttributedString(string: "StringWithUnderLine", attributes: underlineAttribute)
         button.titleLabel?.attributedText = underlineAttributedString
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    
     private var collectionView: UICollectionView = {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .horizontal
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
-            let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            cv.translatesAutoresizingMaskIntoConstraints = false
-            
-            return cv
-        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        return cv
     }()
     
     //MARK: - Initializer
@@ -72,11 +70,24 @@ final class HomeTableViewCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    func configure(with model: HomeTableViewCellModel, delegate: HomeTableViewCellDelegate) {
-        self.delegate = delegate
+    @objc func buttonClicked(sender : UIButton){
+        detailsDelegate?.seeAllTapped(in: section ?? 2)
+    }
+    
+    func configure(with model: HomeTableViewCellMovieModel, delegate: HomeTableViewCellDelegate, section: Int) {
+        self.detailsDelegate = delegate
         self.model = model
-        moviesGenreName.text = model.moviesResponse.results.first?.name
+        self.section = section
         
+        switch section {
+        case 0:
+            moviesGenreName.text = "Movies"
+        case 1:
+            moviesGenreName.text = "Serials"
+        default:
+            moviesGenreName.text = "Unknown"
+            return
+        }
         collectionView.reloadData()
     }
     
@@ -98,23 +109,43 @@ final class HomeTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            moviesGenreName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            moviesGenreName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            moviesGenreName.trailingAnchor.constraint(equalTo: allMoviesButton.leadingAnchor, constant: -12),
-            moviesGenreName.bottomAnchor.constraint(equalTo: allMoviesButton.bottomAnchor),
+            moviesGenreName.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: 12),
+            moviesGenreName.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: 12),
+            moviesGenreName.trailingAnchor.constraint(
+                equalTo: allMoviesButton.leadingAnchor,
+                constant: -12),
+            moviesGenreName.bottomAnchor.constraint(
+                equalTo: allMoviesButton.bottomAnchor),
             
-            allMoviesButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            allMoviesButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            allMoviesButton.topAnchor.constraint(
+                equalTo: contentView.topAnchor, constant: 12),
+            allMoviesButton.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -12),
             
-            collectionView.topAnchor.constraint(equalTo: moviesGenreName.bottomAnchor, constant: 12),
-            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            collectionView.heightAnchor.constraint(equalToConstant: 150)
+            collectionView.topAnchor.constraint(
+                equalTo: moviesGenreName.bottomAnchor,
+                constant: 12),
+            collectionView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: 12),
+            collectionView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -12),
+            collectionView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -12),
+            collectionView.heightAnchor.constraint(
+                equalToConstant: 150)
         ])
     }
+    
+    
 }
-
 
 //ცალკე ფაილში გავიტანო ქოლექშენ ვიუ. საუბერქოლექშენვიუ.
 //extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -122,43 +153,29 @@ final class HomeTableViewCell: UITableViewCell {
 //        model?.moviesResponse.results.count ?? 0
 //    }
 
-
-
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         6
     }
-
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // Dequeue the reusable cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath)
         
-        // Safely cast to your custom cell class
         if let homeCollectionViewCell = cell as? HomeCollectionViewCell,
-           let movie = model?.moviesResponse.results[indexPath.row] {
-            // Configure the cell with the movie object
+           let movie = model?.moviesResponse?.results[indexPath.row] {
+            
             homeCollectionViewCell.configure(with: movie)
         }
         
-        // Return the cell
         return cell
     }
-
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         CGSize(width: 100, height: collectionView.frame.height)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        20
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didSelectRowAt(at: indexPath.row)
+        detailsDelegate?.didSelectRowAt(at: indexPath.row)
     }
-    
 }
-
-

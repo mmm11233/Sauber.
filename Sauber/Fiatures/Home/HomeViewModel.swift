@@ -5,15 +5,31 @@ import Combine
 //MARK: - Home View Model
 
 protocol HomeViewModelProviding {
+    func fetchMoviesAndSerials()
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { get }
     func numberOfRowsInSection() -> Int
-    func item(at index: Int) -> HomeTableViewCellModel?
+    func item(at index: Int, in section: Int) -> HomeTableViewCellMovieModel?
     func didSelectRowAt(at index: Int, from viewController: UIViewController)
+    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse
+    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse
 }
 
 //MARK: - Home View Model
 
 final class HomeViewModel: HomeViewModelProviding {
+    
+    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse {
+        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (movieResponse?.results)!))
+        viewController.navigationController?.pushViewController(vc, animated: true)
+        return movieResponse!
+    }
+    
+    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse {
+        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (serialResponse?.results)!))
+        viewController.navigationController?.pushViewController(vc, animated: true)
+        return serialResponse!
+    }
+    
     
     //MARK: - Properties
     
@@ -22,49 +38,76 @@ final class HomeViewModel: HomeViewModelProviding {
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { moviesDidLoadSubject.eraseToAnyPublisher()
     }
     private var movieResponse: MoviesResponse?
+    private var serialResponse: MoviesResponse?
     private var networkManager: NetworkManager
     
     //MARK: - Init
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        //not in here
-        fetchMovies()
     }
     
     func numberOfRowsInSection() -> Int {
-        movieResponse?.results.count ?? 0
+        2
     }
     
-    func item(at index: Int) -> HomeTableViewCellModel? {
-        if let movieResponse {
-            return HomeTableViewCellModel(moviesResponse: movieResponse, movirGenreName: "", movieName: "", movieImage: "")
+    func item(at index: Int, in section: Int) -> HomeTableViewCellMovieModel? {
+        switch section {
+        case 0:
+            if let movieResponse {
+                return HomeTableViewCellMovieModel(moviesResponse: movieResponse, movirGenreName: "", movieName: "", movieImage: "", moviesOriginalName: "", movieRating: 0.0, movieOverwiev: "")
+            }
+        case 1:
+            if let serialResponse {
+                return HomeTableViewCellMovieModel(moviesResponse: serialResponse, movirGenreName: "", movieName: "", movieImage: "", moviesOriginalName: "", movieRating: 0.0, movieOverwiev: "")
+            }
+        default:
+            " "
         }
-        
         return nil
     }
     
-    // MARK: User - Interaction
+    // MARK: - UserInteraction
     
     func didSelectRowAt(at index: Int, from viewController: UIViewController) {
         let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: (movieResponse?.results[index])!))
         viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
-    //notcorrect
-    func fetchMovies() {
-        if let url = URL(string: EndpointRepository.topRatedEndpoint) {
-            //
-            networkManager.fetchData(from: url) { [weak self] (result: Result<MoviesResponse, Error>) in
-                guard let self else { return }
-                switch result {
-                case .success(let model):
-                    self.movieResponse = model
-                    self.moviesDidLoadSubject.send(())
-                case .failure(let error):
-                    print("Error fetching data: \(error)")
-                }
+    func fetchMoviesAndSerials() {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        print("Fetching movies...")
+        Services(networkmanager: NetworkManager()).fetchMovies { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let model):
+                print("Movies fetched successfully")
+                self.movieResponse = model
+            case .failure(let error):
+                print("Error fetching movies: \(error)")
             }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        print("Fetching serials...")
+        Services(networkmanager: NetworkManager()).fetchSerials { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let model):
+                print("Serials fetched successfully")
+                self.serialResponse = model
+            case .failure(let error):
+                print("Error fetching serials: \(error)")
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            print("Both movies and serials fetched, notifying UI")
+            self?.moviesDidLoadSubject.send(())
         }
     }
 }

@@ -1,8 +1,9 @@
 import Foundation
- 
+import UIKit
+
 final class Services {
+    
     private let networkmanager: NetworkManager
-    private var movieResponse: MoviesResponse?
     
     init(
         networkmanager: NetworkManager
@@ -10,33 +11,68 @@ final class Services {
         self.networkmanager = networkmanager
     }
     
-    func fetchMovies() {
+    func fetchMovies(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
         if let url = URL(string: EndpointRepository.topRatedEndpoint) {
             
-            networkmanager.fetchData(from: url) { [weak self] (result: Result<MoviesResponse, Error>) in
-                guard let self else { return }
+            networkmanager.fetchData(from: url) { (result: Result<MoviesResponse, Error>) in
                 switch result {
                 case .success(let model):
-                    self.movieResponse = model
+                    completion(.success(model))
                 case .failure(let error):
                     print("Error fetching data: \(error)")
+                    completion(.failure(error))
                 }
             }
         }
     }
     
-    func fetchPopularMovies() {
+    func fetchSerials(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
         if let url = URL(string: EndpointRepository.popularEndpoint) {
             
-            networkmanager.fetchData(from: url) { [weak self] (result: Result<MoviesResponse, Error>) in
-                guard let self else { return }
+            networkmanager.fetchData(from: url) { (result: Result<MoviesResponse, Error>) in
                 switch result {
                 case .success(let model):
-                    self.movieResponse = model
+                    completion(.success(model))
                 case .failure(let error):
                     print("Error fetching data: \(error)")
+                    completion(.failure(error))
                 }
             }
         }
+    }
+}
+
+let imageCache = NSCache<AnyObject, AnyObject>()
+
+extension UIImageView {
+    
+    func loadImageUsingCacheWithURL(posterPath: String?) {
+        
+        guard let posterPath = posterPath else {
+            self.image = nil
+            return
+        }
+        
+        let urlString = "\(EndpointRepository.imageBaseURL)\(posterPath)"
+        self.image = nil
+        
+        if let cachedImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+            self.image = cachedImage
+            return
+        }
+        
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) -> Void in
+            if error != nil {
+                print(error!)
+                return
+            }
+            DispatchQueue.main.async {
+                if let downloadImage = UIImage(data: data!) {
+                    imageCache.setObject(downloadImage, forKey: urlString as AnyObject)
+                    self.image = downloadImage
+                }
+            }
+        }).resume()
     }
 }

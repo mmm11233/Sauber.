@@ -1,11 +1,10 @@
-
 import UIKit
 
 final class MoviesListViewController: UIViewController {
     
     //MARK: - Properties
-    private let service = Services(networkmanager: NetworkManager())
-    private let movies: [MoviesResponse] = []
+  
+    private var viewModel: MoviesListViewModel
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -14,6 +13,14 @@ final class MoviesListViewController: UIViewController {
         return tableView
     }()
     
+    init(viewModel: MoviesListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - LifeCycle
     
@@ -22,14 +29,13 @@ final class MoviesListViewController: UIViewController {
         setupView()
         setupConstraints()
         setupTableView()
-        
-        service.fetchPopularMovies()
     }
     
     //MARK: - Setup
     
     private func setupView() {
         view.backgroundColor = .white
+        navigationItem.title = "Movies List"
         view.addSubview(tableView)
     }
     
@@ -50,26 +56,40 @@ final class MoviesListViewController: UIViewController {
         ])
     }
     
-         func setupTableView() {
-             tableView.dataSource = self
-             tableView.register(MoviesListTableViewCell.self,
-                                forCellReuseIdentifier: "MoviesListTableViewCell")
-        }
+    private  func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(MoviesListTableViewCell.self,
+                           forCellReuseIdentifier: "MoviesListTableViewCell")
     }
     
-    // MARK: - Table View Data Source And Delegate
-    
-extension MoviesListViewController: UITableViewDataSource {
+}
+
+
+// MARK: - Table View Data Source And Delegate
+
+extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        viewModel.recivedMovies.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MoviesListTableViewCell", for: indexPath)
-        if let MoviesListTableViewCell = cell as? MoviesListTableViewCell {
-           return MoviesListTableViewCell
+        guard let moviesListTableViewCell = cell as? MoviesListTableViewCell else {
+            fatalError("Unexpected cell type: \(cell)")
         }
         
-        return cell
+        let movie = viewModel.recivedMovies[indexPath.row]
+        moviesListTableViewCell.configure(with: movie)
+        
+        return moviesListTableViewCell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
+        let movie = viewModel.recivedMovies[indexPath.row]
+        
+        navigationController?.pushViewController(MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: movie)), animated: true)
+    }
+    
 }

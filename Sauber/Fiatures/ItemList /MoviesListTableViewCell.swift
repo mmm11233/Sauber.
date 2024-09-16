@@ -3,10 +3,10 @@ import UIKit
 final class MoviesListTableViewCell: UITableViewCell {
     
     // MARK: - Properties
-    
+   
     private var moviesTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .darkGray
         label.text = ""
         label.numberOfLines = 0
@@ -16,7 +16,7 @@ final class MoviesListTableViewCell: UITableViewCell {
     
     private var moviesRatingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textColor = .darkGray
         label.text = "Rating - "
         label.numberOfLines = 0
@@ -62,11 +62,16 @@ final class MoviesListTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        moviesTitleLabel.text = nil
+        moviesOverviewLabel.text = nil
     }
     
     // MARK: - Configuration
-    private func configure(with item: MoviesResponse) {
-        moviesTitleLabel.text = item.results.
+    func configure(with model: Movie) {
+        moviesTitleLabel.text = model.originalTitle
+        moviesRatingLabel.text = "Rating - \(model.popularity)"
+        moviesOverviewLabel.text = model.overview
+        moviesImage.loadImageUsingCacheWithURL(posterPath: model.posterPath)
     }
 
     // MARK: - Setup

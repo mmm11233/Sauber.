@@ -11,26 +11,14 @@ final class MoviesDetailsViewModelImpl {
     }
     
     func getTitle() -> String {
-        selectedMovie.originalName ?? ""
+        selectedMovie.originalTitle ?? "empty name"
     }
     
     func getSubtitle() -> String {
-        selectedMovie.name ?? ""
+        selectedMovie.originalLanguage ?? "empty subtitle"
     }
     
     func getDescription() -> String {
         selectedMovie.overview ?? "empty description"
-    }
-    
-    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        func downloadImage(from url: URL,  completion: @escaping (UIImage?) -> Void) {
-            URLSession.shared.dataTask(with: url) { data, _, _ in
-                if let data = data {
-                    completion((UIImage(data: data)))
-                } else {
-                    completion(nil)
-                }
-            }.resume()
-        }
     }
 }
