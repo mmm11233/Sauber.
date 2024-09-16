@@ -1,11 +1,13 @@
 import UIKit
+import Combine
 
 final class MoviesListViewController: UIViewController {
     
     //MARK: - Properties
   
     private var viewModel: MoviesListViewModel
-    
+    private var subscribers = Set<AnyCancellable>()
+
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -29,10 +31,40 @@ final class MoviesListViewController: UIViewController {
         setupView()
         setupConstraints()
         setupTableView()
+        setupBindigs()
     }
     
     //MARK: - Setup
     
+    private func setupBindigs() {
+        viewModel.isLoading
+            .sink { [weak self] isLoading in
+                if isLoading {
+                    self?.startLoader()
+                } else {
+                    self?.stopLoader()
+                    self?.dismissTableViewViewLoader()
+                }
+            }.store(in: &subscribers)
+        
+        viewModel.moviesDidLoadPublisher
+            .sink { [weak self] in
+                self?.tableView.reloadData()
+            }.store(in: &subscribers)
+    }
+    
+    private func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        tableView.refreshControl = refreshControl
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshControlValueChanged(sender:)), for: .valueChanged)
+    }
+
+    @objc private func refreshControlValueChanged(sender: UIRefreshControl) {
+        viewModel.refreshData()
+    }
+    private func dismissTableViewViewLoader() {
+        tableView.refreshControl?.endRefreshing()
+    }
     private func setupView() {
         view.backgroundColor = .white
         navigationItem.title = "Movies List"
@@ -62,7 +94,6 @@ final class MoviesListViewController: UIViewController {
         tableView.register(MoviesListTableViewCell.self,
                            forCellReuseIdentifier: "MoviesListTableViewCell")
     }
-    
 }
 
 
@@ -72,6 +103,17 @@ extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.recivedMovies.count
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.recivedMovies.count - 1, viewModel.currentPage < viewModel.totalPages {
+            viewModel.refreshData()
+           }
+        
+        let animation = AnimationFactory.makeMoveUpWithFade(rowHeight: cell.frame.height, duration: 0.5, delayFactor: 0.05)
+        let animator = Animator(animation: animation)
+        
+        animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,5 +133,7 @@ extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
         
         navigationController?.pushViewController(MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: movie)), animated: true)
     }
+    
+    
     
 }

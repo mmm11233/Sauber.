@@ -13,6 +13,10 @@
 		3915B1422C731F6B00EFEE76 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915B1412C731F6B00EFEE76 /* Movie.swift */; };
 		3915B1462C751B8C00EFEE76 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915B1452C751B8C00EFEE76 /* HomeViewModel.swift */; };
 		3917787B2C9574C2005130CB /* MoviesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3917787A2C9574C2005130CB /* MoviesListViewModel.swift */; };
+		3917787E2C98CA9A005130CB /* AnimationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3917787D2C98CA9A005130CB /* AnimationFactory.swift */; };
+		391778802C98CAD0005130CB /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3917787F2C98CAD0005130CB /* Animator.swift */; };
+		391778842C98CB31005130CB /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391778832C98CB31005130CB /* UITableView.swift */; };
+		391778862C98D225005130CB /* UIViewController+Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391778852C98D225005130CB /* UIViewController+Loader.swift */; };
 		396E79E32C91AEAD00285984 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396E79E22C91AEAD00285984 /* MoviesListViewController.swift */; };
 		396E79E52C91AEC200285984 /* MoviesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396E79E42C91AEC200285984 /* MoviesListTableViewCell.swift */; };
 		397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30B2C635B520020FE9D /* AppDelegate.swift */; };
@@ -22,7 +26,6 @@
 		397EA3182C635B540020FE9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 397EA3162C635B540020FE9D /* LaunchScreen.storyboard */; };
 		39C283DE2C762F410073C8B5 /* HomeTableViewCellMovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C283DD2C762F410073C8B5 /* HomeTableViewCellMovieModel.swift */; };
 		39C392952C7BC96400751A9B /* MoviesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392942C7BC96400751A9B /* MoviesDetailViewController.swift */; };
-		39C392982C864C9C00751A9B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392972C864C9C00751A9B /* UIImageView+Extension.swift */; };
 		39C3929E2C865A0100751A9B /* MoviesDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3929D2C865A0100751A9B /* MoviesDetailViewModel.swift */; };
 		39C392A12C888DBA00751A9B /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392A02C888DBA00751A9B /* Services.swift */; };
 		39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15832C636EAE00C12DFA /* EndpointRepository.swift */; };
@@ -37,6 +40,10 @@
 		3915B1412C731F6B00EFEE76 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		3915B1452C751B8C00EFEE76 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3917787A2C9574C2005130CB /* MoviesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewModel.swift; sourceTree = "<group>"; };
+		3917787D2C98CA9A005130CB /* AnimationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationFactory.swift; sourceTree = "<group>"; };
+		3917787F2C98CAD0005130CB /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		391778832C98CB31005130CB /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		391778852C98D225005130CB /* UIViewController+Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Loader.swift"; sourceTree = "<group>"; };
 		396E79E22C91AEAD00285984 /* MoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
 		396E79E42C91AEC200285984 /* MoviesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListTableViewCell.swift; sourceTree = "<group>"; };
 		397EA3082C635B520020FE9D /* Sauber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sauber.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +55,6 @@
 		397EA3192C635B540020FE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39C283DD2C762F410073C8B5 /* HomeTableViewCellMovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCellMovieModel.swift; sourceTree = "<group>"; };
 		39C392942C7BC96400751A9B /* MoviesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailViewController.swift; sourceTree = "<group>"; };
-		39C392972C864C9C00751A9B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		39C3929D2C865A0100751A9B /* MoviesDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDetailViewModel.swift; sourceTree = "<group>"; };
 		39C392A02C888DBA00751A9B /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		39EB15832C636EAE00C12DFA /* EndpointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointRepository.swift; sourceTree = "<group>"; };
@@ -73,6 +79,32 @@
 				3915B1412C731F6B00EFEE76 /* Movie.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		3917787C2C98CA81005130CB /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				391778812C98CADB005130CB /* Animation */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		391778812C98CADB005130CB /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				3917787D2C98CA9A005130CB /* AnimationFactory.swift */,
+				3917787F2C98CAD0005130CB /* Animator.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		391778822C98CB1D005130CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				391778832C98CB31005130CB /* UITableView.swift */,
+				391778852C98D225005130CB /* UIViewController+Loader.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		396E79E12C91AE3B00285984 /* ItemList  */ = {
@@ -104,7 +136,8 @@
 		397EA30A2C635B520020FE9D /* Sauber */ = {
 			isa = PBXGroup;
 			children = (
-				39C392962C864C7A00751A9B /* Extensions */,
+				391778822C98CB1D005130CB /* Extensions */,
+				3917787C2C98CA81005130CB /* Common */,
 				39F7260B2C65507C00E3C5F8 /* Application */,
 				3915B1402C731F4F00EFEE76 /* Model */,
 				39EB15852C637FCD00C12DFA /* Fiatures */,
@@ -114,14 +147,6 @@
 				397EA3192C635B540020FE9D /* Info.plist */,
 			);
 			path = Sauber;
-			sourceTree = "<group>";
-		};
-		39C392962C864C7A00751A9B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				39C392972C864C9C00751A9B /* UIImageView+Extension.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		39C3929F2C888D8700751A9B /* MoviesService */ = {
@@ -286,25 +311,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				391778802C98CAD0005130CB /* Animator.swift in Sources */,
 				39C392952C7BC96400751A9B /* MoviesDetailViewController.swift in Sources */,
 				39F726112C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift in Sources */,
-				39C392982C864C9C00751A9B /* UIImageView+Extension.swift in Sources */,
 				3915B1462C751B8C00EFEE76 /* HomeViewModel.swift in Sources */,
 				3915B13D2C731E5B00EFEE76 /* NetworkError.swift in Sources */,
 				39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */,
 				39C392A12C888DBA00751A9B /* Services.swift in Sources */,
+				391778862C98D225005130CB /* UIViewController+Loader.swift in Sources */,
 				396E79E32C91AEAD00285984 /* MoviesListViewController.swift in Sources */,
 				39C283DE2C762F410073C8B5 /* HomeTableViewCellMovieModel.swift in Sources */,
 				397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */,
 				3915B1422C731F6B00EFEE76 /* Movie.swift in Sources */,
 				397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */,
 				397EA30E2C635B520020FE9D /* SceneDelegate.swift in Sources */,
+				3917787E2C98CA9A005130CB /* AnimationFactory.swift in Sources */,
 				39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */,
 				3917787B2C9574C2005130CB /* MoviesListViewModel.swift in Sources */,
 				396E79E52C91AEC200285984 /* MoviesListTableViewCell.swift in Sources */,
 				39C3929E2C865A0100751A9B /* MoviesDetailViewModel.swift in Sources */,
 				3915B13B2C731E1E00EFEE76 /* NetworkingLayer.swift in Sources */,
 				3915B13F2C731E7300EFEE76 /* DataParser.swift in Sources */,
+				391778842C98CB31005130CB /* UITableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

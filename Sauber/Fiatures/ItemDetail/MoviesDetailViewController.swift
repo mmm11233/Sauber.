@@ -93,9 +93,8 @@ final class MoviesDetailsViewController: UIViewController {
     // MARK: - Configuration
     
    private func configureView() {
-        if let posterPath = viewModel.selectedMovie.posterPath,
-           let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)") {
-            imageView.loadImage(from: url)
+        if let posterPath = viewModel.selectedMovie.posterPath {
+            imageView.loadImageUsingCacheWithURL(posterPath: posterPath)
         }
         titleLabel.text = viewModel.getTitle()
         subTitleLabel.text = viewModel.getSubtitle()

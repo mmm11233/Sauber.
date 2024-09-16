@@ -79,7 +79,7 @@ final class HomeViewModel: HomeViewModelProviding {
         
         dispatchGroup.enter()
         print("Fetching movies...")
-        Services(networkmanager: NetworkManager()).fetchMovies { [weak self] result in
+        Services(networkmanager: NetworkManager()).fetchMovies(page: 1) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let model):
@@ -93,7 +93,7 @@ final class HomeViewModel: HomeViewModelProviding {
         
         dispatchGroup.enter()
         print("Fetching serials...")
-        Services(networkmanager: NetworkManager()).fetchSerials { [weak self] result in
+        Services(networkmanager: NetworkManager()).fetchSerials(page: 1) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let model):

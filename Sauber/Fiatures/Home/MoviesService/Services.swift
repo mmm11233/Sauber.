@@ -11,8 +11,9 @@ final class Services {
         self.networkmanager = networkmanager
     }
     
-    func fetchMovies(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
-        if let url = URL(string: EndpointRepository.topRatedEndpoint) {
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
+        let urlString = "\(EndpointRepository.topRatedEndpoint)\(page)"
+        if let url = URL(string: urlString) {
             
             networkmanager.fetchData(from: url) { (result: Result<MoviesResponse, Error>) in
                 switch result {
@@ -26,8 +27,10 @@ final class Services {
         }
     }
     
-    func fetchSerials(completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
-        if let url = URL(string: EndpointRepository.popularEndpoint) {
+    func fetchSerials(page: Int, completion: @escaping (Result<MoviesResponse, Error>) -> Void) {
+        
+        let urlString = "\(EndpointRepository.popularEndpoint)\(page)"
+        if let url = URL(string: urlString) {
             
             networkmanager.fetchData(from: url) { (result: Result<MoviesResponse, Error>) in
                 switch result {

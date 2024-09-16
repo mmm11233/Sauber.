@@ -1,11 +1,9 @@
 import Foundation
 
 struct MoviesResponse: Decodable {
-    let results: [Movie]
-    
-    enum CodingKeys: String, CodingKey {
-        case results = "results"
-    }
+    var results: [Movie]
+    var page: Int
+    let total_pages: Int
 }
 
 struct Movie: Decodable {
