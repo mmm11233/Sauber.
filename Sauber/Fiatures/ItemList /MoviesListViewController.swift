@@ -4,10 +4,10 @@ import Combine
 final class MoviesListViewController: UIViewController {
     
     //MARK: - Properties
-  
+    
     private var viewModel: MoviesListViewModel
     private var subscribers = Set<AnyCancellable>()
-
+    
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -58,7 +58,7 @@ final class MoviesListViewController: UIViewController {
         tableView.refreshControl = refreshControl
         tableView.refreshControl?.addTarget(self, action: #selector(refreshControlValueChanged(sender:)), for: .valueChanged)
     }
-
+    
     @objc private func refreshControlValueChanged(sender: UIRefreshControl) {
         viewModel.refreshData()
     }
@@ -102,13 +102,13 @@ final class MoviesListViewController: UIViewController {
 extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.recivedMovies.count
-        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.recivedMovies.count - 1, viewModel.currentPage < viewModel.totalPages {
+        if indexPath.row == viewModel.recivedMovies.count - 1,
+           viewModel.currentPage < viewModel.totalPages {
             viewModel.refreshData()
-           }
+        }
         
         let animation = AnimationFactory.makeMoveUpWithFade(rowHeight: cell.frame.height, duration: 0.5, delayFactor: 0.05)
         let animator = Animator(animation: animation)
@@ -133,7 +133,4 @@ extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
         
         navigationController?.pushViewController(MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: movie)), animated: true)
     }
-    
-    
-    
 }

@@ -1,5 +1,7 @@
 import Foundation
 
+// MARK: - Model
+
 struct MoviesResponse: Decodable {
     var results: [Movie]
     var page: Int

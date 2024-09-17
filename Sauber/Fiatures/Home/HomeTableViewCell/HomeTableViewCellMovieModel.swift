@@ -1,5 +1,7 @@
 import Foundation
 
+//MARK: -Home Table View Cell Model
+
 struct HomeTableViewCellMovieModel {
     let moviesResponse: MoviesResponse?
     let movirGenreName: String 

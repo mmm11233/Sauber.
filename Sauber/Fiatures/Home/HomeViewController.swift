@@ -27,7 +27,6 @@ final class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -78,7 +77,6 @@ final class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "HomeTableViewCell")
     }
-    
 }
 // MARK: - Table View Data Source And Delegate
 
@@ -86,7 +84,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRowsInSection()
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
@@ -98,7 +95,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
-
 
 extension HomeViewController: HomeTableViewCellDelegate {
     func seeAllTapped(in section: Int) {

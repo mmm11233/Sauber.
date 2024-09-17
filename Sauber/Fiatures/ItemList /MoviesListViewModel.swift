@@ -13,7 +13,7 @@ final class MoviesListViewModel {
    
     var currentPage = 1
     var totalPages = 5
-    
+
     init(
         passedMovie: [Movie]
     ) {
@@ -21,6 +21,7 @@ final class MoviesListViewModel {
     }
     
     func refreshData() {
+//ToDo switch with enum TableViewSection
         fetchMovies()
         fetchSerials()
         currentPage += 1

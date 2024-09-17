@@ -1,6 +1,7 @@
 import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
+    
     //MARK: - Properties
     
     private var movieImage: UIImageView = {

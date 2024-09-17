@@ -1,5 +1,7 @@
 import UIKit
 
+//MARK: - Home Table View Cell Delegate
+
 protocol HomeTableViewCellDelegate: AnyObject {
     func seeAllTapped(in section: Int)
     func didSelectRowAt(at index: Int)
@@ -69,11 +71,6 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configuration
-    
-    @objc func buttonClicked(sender : UIButton){
-        detailsDelegate?.seeAllTapped(in: section ?? 2)
-    }
-    
     func configure(with model: HomeTableViewCellMovieModel, delegate: HomeTableViewCellDelegate, section: Int) {
         self.detailsDelegate = delegate
         self.model = model
@@ -91,6 +88,9 @@ final class HomeTableViewCell: UITableViewCell {
         collectionView.reloadData()
     }
     
+    @objc func buttonClicked(sender : UIButton){
+        detailsDelegate?.seeAllTapped(in: section ?? 2)
+    }
     
     //MARK: - setupView
     private func setupView() {
@@ -143,15 +143,8 @@ final class HomeTableViewCell: UITableViewCell {
                 equalToConstant: 150)
         ])
     }
-    
-    
 }
 
-//ცალკე ფაილში გავიტანო ქოლექშენ ვიუ. საუბერქოლექშენვიუ.
-//extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        model?.moviesResponse.results.count ?? 0
-//    }
 
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

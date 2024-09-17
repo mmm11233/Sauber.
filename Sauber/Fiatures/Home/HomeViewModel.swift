@@ -18,19 +18,6 @@ protocol HomeViewModelProviding {
 
 final class HomeViewModel: HomeViewModelProviding {
     
-    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse {
-        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (movieResponse?.results)!))
-        viewController.navigationController?.pushViewController(vc, animated: true)
-        return movieResponse!
-    }
-    
-    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse {
-        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (serialResponse?.results)!))
-        viewController.navigationController?.pushViewController(vc, animated: true)
-        return serialResponse!
-    }
-    
-    
     //MARK: - Properties
     
     private let isLoadingSubject: CurrentValueSubject<Bool, Never> = .init(false)
@@ -46,6 +33,8 @@ final class HomeViewModel: HomeViewModelProviding {
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
+    
+    //MARK: - Table View Data Source
     
     func numberOfRowsInSection() -> Int {
         2
@@ -67,6 +56,20 @@ final class HomeViewModel: HomeViewModelProviding {
         return nil
     }
     
+    //MARK: - Functions
+    
+    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse {
+        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (movieResponse?.results)!))
+        viewController.navigationController?.pushViewController(vc, animated: true)
+        return movieResponse!
+    }
+    
+    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse {
+        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (serialResponse?.results)!))
+        viewController.navigationController?.pushViewController(vc, animated: true)
+        return serialResponse!
+    }
+    
     // MARK: - UserInteraction
     
     func didSelectRowAt(at index: Int, from viewController: UIViewController) {
@@ -74,16 +77,16 @@ final class HomeViewModel: HomeViewModelProviding {
         viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
+    // MARK: - Fetch data
+    
     func fetchMoviesAndSerials() {
         let dispatchGroup = DispatchGroup()
-        
         dispatchGroup.enter()
-        print("Fetching movies...")
+        
         Services(networkmanager: NetworkManager()).fetchMovies(page: 1) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let model):
-                print("Movies fetched successfully")
                 self.movieResponse = model
             case .failure(let error):
                 print("Error fetching movies: \(error)")
@@ -92,12 +95,11 @@ final class HomeViewModel: HomeViewModelProviding {
         }
         
         dispatchGroup.enter()
-        print("Fetching serials...")
+        
         Services(networkmanager: NetworkManager()).fetchSerials(page: 1) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let model):
-                print("Serials fetched successfully")
                 self.serialResponse = model
             case .failure(let error):
                 print("Error fetching serials: \(error)")
@@ -106,7 +108,6 @@ final class HomeViewModel: HomeViewModelProviding {
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
-            print("Both movies and serials fetched, notifying UI")
             self?.moviesDidLoadSubject.send(())
         }
     }

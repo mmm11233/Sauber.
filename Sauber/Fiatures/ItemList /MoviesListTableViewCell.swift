@@ -3,7 +3,7 @@ import UIKit
 final class MoviesListTableViewCell: UITableViewCell {
     
     // MARK: - Properties
-   
+    
     private var moviesTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -73,9 +73,9 @@ final class MoviesListTableViewCell: UITableViewCell {
         moviesOverviewLabel.text = model.overview
         moviesImage.loadImageUsingCacheWithURL(posterPath: model.posterPath)
     }
-
+    
     // MARK: - Setup
-
+    
     private func setUpSubView() {
         addSubview(moviesTitleLabel)
         addSubview(moviesRatingLabel)
@@ -110,8 +110,8 @@ final class MoviesListTableViewCell: UITableViewCell {
                 equalTo: moviesImage.trailingAnchor,
                 constant: 12),
             moviesOverviewLabel.trailingAnchor.constraint(
-                    equalTo: self.trailingAnchor,
-                    constant: 12),
+                equalTo: self.trailingAnchor,
+                constant: 12),
             moviesOverviewLabel.bottomAnchor
                 .constraint(equalTo: moviesImage.bottomAnchor),
             

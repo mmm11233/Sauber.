@@ -1,6 +1,8 @@
 import Foundation
 import UIKit
 
+// MARK: - Movies Services
+
 final class Services {
     
     private let networkmanager: NetworkManager
@@ -44,6 +46,8 @@ final class Services {
         }
     }
 }
+
+// MARK: - Cache image
 
 let imageCache = NSCache<AnyObject, AnyObject>()
 
