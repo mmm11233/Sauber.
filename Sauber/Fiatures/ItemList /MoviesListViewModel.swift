@@ -10,20 +10,23 @@ final class MoviesListViewModel {
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { moviesDidLoadSubject.eraseToAnyPublisher() }
     
     var recivedMovies: [Movie]
-   
+    var currentSection: TableViewSection = .movies
     var currentPage = 1
     var totalPages = 5
-
+    
     init(
         passedMovie: [Movie]
     ) {
         recivedMovies = passedMovie
     }
     
-    func refreshData() {
-//ToDo switch with enum TableViewSection
-        fetchMovies()
-        fetchSerials()
+    func refreshData(for section: TableViewSection) {
+        switch section {
+        case .movies:
+            fetchMovies()
+        case .serials:
+            fetchSerials()
+        }
         currentPage += 1
     }
     

@@ -34,7 +34,7 @@ final class MoviesListTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let moviesImage: UIImageView = {
+    private var moviesImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleToFill
         image.image = UIImage(named: "red")

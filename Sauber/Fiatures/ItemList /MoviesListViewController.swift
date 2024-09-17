@@ -60,8 +60,15 @@ final class MoviesListViewController: UIViewController {
     }
     
     @objc private func refreshControlValueChanged(sender: UIRefreshControl) {
-        viewModel.refreshData()
+       
+        if viewModel.currentSection == .movies {
+                viewModel.refreshData(for: .movies)
+        } else if viewModel.currentSection == .serials {
+                viewModel.refreshData(for: .serials)
+            }
+            sender.endRefreshing()
     }
+    
     private func dismissTableViewViewLoader() {
         tableView.refreshControl?.endRefreshing()
     }
@@ -107,7 +114,7 @@ extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == viewModel.recivedMovies.count - 1,
            viewModel.currentPage < viewModel.totalPages {
-            viewModel.refreshData()
+            viewModel.refreshData(for: .movies)
         }
         
         let animation = AnimationFactory.makeMoveUpWithFade(rowHeight: cell.frame.height, duration: 0.5, delayFactor: 0.05)
