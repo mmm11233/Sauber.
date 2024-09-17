@@ -87,9 +87,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
+        
         if let homeCell = cell as? HomeTableViewCell,
-           let movie = viewModel.item(at: indexPath.row, in: indexPath.item) {
-            homeCell.configure(with: movie, delegate: self, section: indexPath.item)
+           let movieType = MovieType(rawValue: indexPath.item),
+           let movie = viewModel.item(at: indexPath.row, in: movieType) {
+            homeCell.configure(with: movie, delegate: self, for: movieType)
         }
         
         return cell
@@ -97,15 +99,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension HomeViewController: HomeTableViewCellDelegate {
-    func seeAllTapped(in section: Int) {
-        if section == 0 {
+
+    func seeAllTapped(for section: MovieType) {
+        if section == .movies {
             viewModel.movies(section: section, from: self)
-        }
-        else if section == 1 {
+        } else if section == .serials {
             viewModel.serials(section: section, from: self)
-        }
-        else {
-            return 
         }
     }
     
@@ -113,3 +112,4 @@ extension HomeViewController: HomeTableViewCellDelegate {
         viewModel.didSelectRowAt(at: index, from: self)
     }
 }
+

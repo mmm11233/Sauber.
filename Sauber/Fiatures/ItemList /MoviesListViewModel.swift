@@ -1,8 +1,12 @@
 import UIKit
 import Combine
 
+//MARK: - Movies List View Model
+
 final class MoviesListViewModel {
     
+    //MARK: - Properties
+
     private let isLoadingSubject: CurrentValueSubject<Bool, Never> = .init(false)
     var isLoading: AnyPublisher<Bool, Never> { isLoadingSubject.eraseToAnyPublisher() }
     
@@ -10,17 +14,21 @@ final class MoviesListViewModel {
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { moviesDidLoadSubject.eraseToAnyPublisher() }
     
     var recivedMovies: [Movie]
-    var currentSection: TableViewSection = .movies
+    var currentSection: MovieType = .movies
     var currentPage = 1
     var totalPages = 5
     
+    //MARK: - Init
+
     init(
         passedMovie: [Movie]
     ) {
         recivedMovies = passedMovie
     }
     
-    func refreshData(for section: TableViewSection) {
+    //MARK: - Fetch Data
+
+    func refreshData(for section: MovieType) {
         switch section {
         case .movies:
             fetchMovies()
@@ -66,3 +74,4 @@ final class MoviesListViewModel {
         }
     }
 }
+

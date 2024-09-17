@@ -8,10 +8,10 @@ protocol HomeViewModelProviding {
     func fetchMoviesAndSerials()
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { get }
     func numberOfRowsInSection() -> Int
-    func item(at index: Int, in section: Int) -> HomeTableViewCellMovieModel?
+    func item(at index: Int, in section: MovieType) -> HomeTableViewCellMovieModel?
     func didSelectRowAt(at index: Int, from viewController: UIViewController)
-    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse?
-    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse?
+    func movies(section: MovieType,from viewController: UIViewController)
+    func serials(section: MovieType,from viewController: UIViewController)
 }
 
 //MARK: - Home View Model
@@ -40,48 +40,42 @@ final class HomeViewModel: HomeViewModelProviding {
         2
     }
     
-    func item(at index: Int, in section: Int) -> HomeTableViewCellMovieModel? {
+    func item(at index: Int, in section: MovieType) -> HomeTableViewCellMovieModel? {
         switch section {
-        case 0:
+        case .movies:
             if let movieResponse {
                 return HomeTableViewCellMovieModel(moviesResponse: movieResponse, movirGenreName: "", movieName: "", movieImage: "", moviesOriginalName: "", movieRating: 0.0, movieOverwiev: "")
             }
-        case 1:
+        case .serials:
             if let serialResponse {
                 return HomeTableViewCellMovieModel(moviesResponse: serialResponse, movirGenreName: "", movieName: "", movieImage: "", moviesOriginalName: "", movieRating: 0.0, movieOverwiev: "")
             }
-        default:
-            " "
         }
         return nil
     }
     
     //MARK: - Functions
     
-    func movies(section: Int, from viewController: UIViewController) -> MoviesResponse? {
-        
+    func movies(section: MovieType, from viewController: UIViewController) {
         guard let movieResponse = movieResponse else {
-            return nil
+            return
         }
         
         let movies = movieResponse.results
         let viewModel = MoviesListViewModel(passedMovie: movies)
         let vc = MoviesListViewController(viewModel: viewModel)
         viewController.navigationController?.pushViewController(vc, animated: true)
-        return movieResponse
     }
     
-    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse? {
-        
+    func serials(section: MovieType,from viewController: UIViewController) {
         guard let serialResponse = serialResponse else {
-            return nil
+            return
         }
         
         let serials = serialResponse.results
         let viewModel = MoviesListViewModel(passedMovie: serials)
         let vc = MoviesListViewController(viewModel: viewModel)
         viewController.navigationController?.pushViewController(vc, animated: true)
-        return serialResponse
     }
     
     // MARK: - UserInteraction

@@ -3,7 +3,7 @@ import UIKit
 //MARK: - Home Table View Cell Delegate
 
 protocol HomeTableViewCellDelegate: AnyObject {
-    func seeAllTapped(in section: Int)
+    func seeAllTapped(for section: MovieType)
     func didSelectRowAt(at index: Int)
 }
 
@@ -13,7 +13,7 @@ final class HomeTableViewCell: UITableViewCell {
     
     private var model: HomeTableViewCellMovieModel?
     private weak var detailsDelegate: HomeTableViewCellDelegate?
-    private var section: Int?
+    private var section: MovieType?
     
     private var moviesGenreName: UILabel = {
         let label = UILabel()
@@ -71,25 +71,27 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configure(with model: HomeTableViewCellMovieModel, delegate: HomeTableViewCellDelegate, section: Int) {
+    func configure(with model: HomeTableViewCellMovieModel, delegate: HomeTableViewCellDelegate, for section: MovieType) {
         self.detailsDelegate = delegate
         self.model = model
         self.section = section
         
         switch section {
-        case 0:
+        case .movies:
             moviesGenreName.text = "Movies"
-        case 1:
+        case .serials:
             moviesGenreName.text = "Serials"
-        default:
-            moviesGenreName.text = "Unknown"
-            return
         }
         collectionView.reloadData()
     }
     
     @objc func buttonClicked(sender : UIButton){
-        detailsDelegate?.seeAllTapped(in: section ?? 2)
+    
+        if section == MovieType.movies {
+            detailsDelegate?.seeAllTapped(for: .movies)
+        } else if section == MovieType.serials {
+            detailsDelegate?.seeAllTapped(for: .serials)
+        }
     }
     
     //MARK: - setupView
