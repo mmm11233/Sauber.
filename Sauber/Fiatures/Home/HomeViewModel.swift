@@ -10,8 +10,8 @@ protocol HomeViewModelProviding {
     func numberOfRowsInSection() -> Int
     func item(at index: Int, in section: Int) -> HomeTableViewCellMovieModel?
     func didSelectRowAt(at index: Int, from viewController: UIViewController)
-    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse
-    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse
+    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse?
+    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse?
 }
 
 //MARK: - Home View Model
@@ -58,22 +58,43 @@ final class HomeViewModel: HomeViewModelProviding {
     
     //MARK: - Functions
     
-    func movies(section: Int,from viewController: UIViewController) -> MoviesResponse {
-        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (movieResponse?.results)!))
+    func movies(section: Int, from viewController: UIViewController) -> MoviesResponse? {
+        
+        guard let movieResponse = movieResponse else {
+            return nil
+        }
+        
+        let movies = movieResponse.results
+        let viewModel = MoviesListViewModel(passedMovie: movies)
+        let vc = MoviesListViewController(viewModel: viewModel)
         viewController.navigationController?.pushViewController(vc, animated: true)
-        return movieResponse!
+        return movieResponse
     }
     
-    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse {
-        let vc = MoviesListViewController(viewModel: MoviesListViewModel(passedMovie: (serialResponse?.results)!))
+    func serials(section: Int,from viewController: UIViewController) -> MoviesResponse? {
+        
+        guard let serialResponse = serialResponse else {
+            return nil
+        }
+        
+        let serials = serialResponse.results
+        let viewModel = MoviesListViewModel(passedMovie: serials)
+        let vc = MoviesListViewController(viewModel: viewModel)
         viewController.navigationController?.pushViewController(vc, animated: true)
-        return serialResponse!
+        return serialResponse
     }
     
     // MARK: - UserInteraction
     
     func didSelectRowAt(at index: Int, from viewController: UIViewController) {
-        let vc = MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: (movieResponse?.results[index])!))
+        
+        guard let movieResponse = movieResponse, index < movieResponse.results.count else {
+            return
+        }
+        
+        let selectedMovie = movieResponse.results[index]
+        let viewModel = MoviesDetailsViewModelImpl(selectedMovie: selectedMovie)
+        let vc = MoviesDetailsViewController(viewModel: viewModel)
         viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
