@@ -10,8 +10,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: someScene)
         
-        let firstVC = HomeViewController(viewModel: HomeViewModel(networkManager: NetworkManager()))
-        let someNavigationController = UINavigationController(rootViewController: firstVC)
+        let homeViewController = HomeFactory.makeViewController()
+        let someNavigationController = UINavigationController(rootViewController: homeViewController)
         window?.rootViewController = someNavigationController
         window?.makeKeyAndVisible()
     }

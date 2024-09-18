@@ -2,10 +2,10 @@ import UIKit
 
 // MARK: - Movies Details View Model Impl
 final class MoviesDetailsViewModelImpl {
-    var selectedMovie: Movie
+    var selectedMovie: ItemModel
     
     init(
-        selectedMovie: Movie
+        selectedMovie: ItemModel
     ) {
         self.selectedMovie = selectedMovie
     }

@@ -67,7 +67,7 @@ final class MoviesListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configure(with model: Movie) {
+    func configure(with model: ItemModel) {
         moviesTitleLabel.text = model.originalTitle
         moviesRatingLabel.text = "Rating - \(model.popularity)"
         moviesOverviewLabel.text = model.overview
@@ -86,49 +86,63 @@ final class MoviesListTableViewCell: UITableViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             moviesTitleLabel.topAnchor.constraint(
-                equalTo: moviesImage.topAnchor),
+                equalTo: moviesImage.topAnchor
+            ),
             moviesTitleLabel.leadingAnchor.constraint(
                 equalTo: moviesImage.trailingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             moviesTitleLabel.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             
             moviesRatingLabel.topAnchor.constraint(
                 equalTo: moviesTitleLabel.bottomAnchor,
-                constant: 10),
+                constant: 10
+            ),
             moviesRatingLabel.leadingAnchor.constraint(
                 equalTo: moviesImage.trailingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             moviesRatingLabel.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             moviesOverviewLabel.topAnchor.constraint(
                 equalTo: moviesRatingLabel.bottomAnchor,
-                constant: 10),
+                constant: 10
+            ),
             moviesOverviewLabel.leadingAnchor.constraint(
                 equalTo: moviesImage.trailingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             moviesOverviewLabel.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor,
-                constant: 12),
-            moviesOverviewLabel.bottomAnchor
-                .constraint(equalTo: moviesImage.bottomAnchor),
-            
+                constant: 12
+            ),
+            moviesOverviewLabel.bottomAnchor.constraint(
+                equalTo: moviesImage.bottomAnchor
+            ),
             
             moviesImage.topAnchor.constraint(
                 equalTo: self.topAnchor,
-                constant: 10),
+                constant: 10
+            ),
             moviesImage.leadingAnchor.constraint(
                 equalTo: self.leadingAnchor,
-                constant: 10),
+                constant: 10
+            ),
             moviesImage.bottomAnchor.constraint(
                 equalTo: self.bottomAnchor,
-                constant: -12),
+                constant: -12
+            ),
             moviesImage.heightAnchor.constraint(
-                equalToConstant: 200),
+                equalToConstant: 200
+            ),
             moviesImage.widthAnchor.constraint(
-                equalToConstant: 140)
+                equalToConstant: 140
+            )
         ])
     }
 }

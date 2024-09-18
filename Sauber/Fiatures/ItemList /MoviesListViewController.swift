@@ -6,7 +6,8 @@ final class MoviesListViewController: UIViewController {
     //MARK: - Properties
     
     private var viewModel: MoviesListViewModel
-    private var subscribers = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
+    private let cellId = "MoviesListTableViewCell"
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -15,7 +16,19 @@ final class MoviesListViewController: UIViewController {
         return tableView
     }()
     
-    init(viewModel: MoviesListViewModel) {
+    private var errorView: UILabel = {
+        let errorView = UILabel()
+        errorView.backgroundColor = .lightGray
+        errorView.textColor = .red
+        errorView.isHidden = true
+        return errorView
+    }()
+    
+    // MARK: - Initalizer
+    
+    init(
+        viewModel: MoviesListViewModel
+    ) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -24,54 +37,40 @@ final class MoviesListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = viewModel.itemType.title
         setupView()
         setupConstraints()
         setupTableView()
-        setupBindigs()
+        bindViewModel()
     }
     
     //MARK: - Setup
     
-    private func setupBindigs() {
-        viewModel.isLoading
-            .sink { [weak self] isLoading in
-                if isLoading {
-                    self?.startLoader()
-                } else {
-                    self?.stopLoader()
-                    self?.dismissTableViewViewLoader()
+    private func bindViewModel() {
+        viewModel.$fetchingState
+            .receive(on: RunLoop.main)
+            .sink { [weak self] state in
+                switch state {
+                case .error(let error):
+                    self?.errorView.isHidden = false
+                    self?.errorView.text = error.localizedDescription
+                default:
+                    self?.errorView.isHidden = true
+                    self?.tableView.reloadData()
                 }
-            }.store(in: &subscribers)
+            }
+            .store(in: &cancellables)
         
         viewModel.moviesDidLoadPublisher
+            .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.tableView.reloadData()
-            }.store(in: &subscribers)
-    }
-    
-    private func setupRefreshControl() {
-        let refreshControl = UIRefreshControl()
-        tableView.refreshControl = refreshControl
-        tableView.refreshControl?.addTarget(self, action: #selector(refreshControlValueChanged(sender:)), for: .valueChanged)
-    }
-    
-    @objc private func refreshControlValueChanged(sender: UIRefreshControl) {
-       
-        if viewModel.currentSection == .movies {
-                viewModel.refreshData(for: .movies)
-        } else if viewModel.currentSection == .serials {
-                viewModel.refreshData(for: .serials)
             }
-            sender.endRefreshing()
+            .store(in: &cancellables)
     }
     
-    private func dismissTableViewViewLoader() {
-        tableView.refreshControl?.endRefreshing()
-    }
     private func setupView() {
         view.backgroundColor = .white
         navigationItem.title = "Movies List"
@@ -81,17 +80,17 @@ final class MoviesListViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate ([
             tableView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: 10),
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
             tableView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12),
+                equalTo: view.leadingAnchor
+            ),
             tableView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -12),
+                equalTo: view.trailingAnchor
+            ),
             tableView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -12)
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+            )
         ])
     }
     
@@ -99,44 +98,38 @@ final class MoviesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MoviesListTableViewCell.self,
-                           forCellReuseIdentifier: "MoviesListTableViewCell")
+                           forCellReuseIdentifier: cellId)
     }
 }
-
 
 // MARK: - Table View Data Source And Delegate
 
 extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.recivedMovies.count
+        viewModel.items.count
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.recivedMovies.count - 1,
+        if indexPath.row == viewModel.items.count - 1,
            viewModel.currentPage < viewModel.totalPages {
-            viewModel.refreshData(for: .movies)
+            viewModel.refreshData()
         }
-        
-        let animation = AnimationFactory.makeMoveUpWithFade(rowHeight: cell.frame.height, duration: 0.5, delayFactor: 0.05)
-        let animator = Animator(animation: animation)
-        
-        animator.animate(cell: cell, at: indexPath, in: tableView)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MoviesListTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         guard let moviesListTableViewCell = cell as? MoviesListTableViewCell else {
             fatalError("Unexpected cell type: \(cell)")
         }
         
-        let movie = viewModel.recivedMovies[indexPath.row]
+        let movie = viewModel.items[indexPath.row]
         moviesListTableViewCell.configure(with: movie)
         
         return moviesListTableViewCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
-        let movie = viewModel.recivedMovies[indexPath.row]
+        let movie = viewModel.items[indexPath.row]
         
         navigationController?.pushViewController(MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: movie)), animated: true)
     }

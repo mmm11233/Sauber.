@@ -1,77 +1,66 @@
 import UIKit
 import Combine
 
-//MARK: - Movies List View Model
-
 final class MoviesListViewModel {
     
     //MARK: - Properties
-
-    private let isLoadingSubject: CurrentValueSubject<Bool, Never> = .init(false)
-    var isLoading: AnyPublisher<Bool, Never> { isLoadingSubject.eraseToAnyPublisher() }
     
+    @Published var fetchingState: FetchingState = .finished
     private let moviesDidLoadSubject: PassthroughSubject<Void, Never> = .init()
     var moviesDidLoadPublisher: AnyPublisher<Void, Never> { moviesDidLoadSubject.eraseToAnyPublisher() }
     
-    var recivedMovies: [Movie]
-    var currentSection: MovieType = .movies
     var currentPage = 1
     var totalPages = 5
     
+    // MARK: - Dependencies
+    
+    var items: [ItemModel]
+    let itemType: MovieType
+    private let networkManager: NetworkManager
+    
     //MARK: - Init
-
+    
     init(
-        passedMovie: [Movie]
+        items: [ItemModel],
+        itemType: MovieType,
+        networkManager: NetworkManager
     ) {
-        recivedMovies = passedMovie
+        self.items = items
+        self.itemType = itemType
+        self.networkManager = networkManager
     }
     
     //MARK: - Fetch Data
-
-    func refreshData(for section: MovieType) {
-        switch section {
+    
+    func refreshData() {
+        switch itemType {
         case .movies:
-            fetchMovies()
-        case .serials:
-            fetchSerials()
+            ListService(apiService: networkManager).fetchMovies(page: currentPage) { [ weak self ] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let model):
+                    self.items.append(contentsOf: model)
+                    self.moviesDidLoadSubject.send()
+                    self.fetchingState = .finished
+                case .failure(let error):
+                    print("Error fetching movies: \(error)")
+                    self.fetchingState = .error(error)
+                }
+            }
+        case .series:
+            ListService(apiService: networkManager).fetchSeries(page: currentPage) { [ weak self ] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let model):
+                    self.items.append(contentsOf: model)
+                    self.moviesDidLoadSubject.send()
+                    self.fetchingState = .finished
+                case .failure(let error):
+                    print("Error fetching movies: \(error)")
+                    self.fetchingState = .error(error)
+                }
+            }
         }
         currentPage += 1
     }
-    
-    func fetchMovies() {
-        isLoadingSubject.send(true)
-        
-        Services(networkmanager: NetworkManager()).fetchMovies(page: currentPage) { [weak self] result in
-            guard let self = self else { return }
-            
-            self.isLoadingSubject.send(false)
-            
-            switch result {
-            case .success(let model):
-                self.recivedMovies.append(contentsOf: model.results)
-                self.moviesDidLoadSubject.send()
-            case .failure(let error):
-                print("Error fetching movies: \(error)")
-            }
-        }
-    }
-    
-    func fetchSerials() {
-        isLoadingSubject.send(true)
-        
-        Services(networkmanager: NetworkManager()).fetchSerials(page: currentPage) { [weak self] result in
-            guard let self = self else { return }
-            
-            self.isLoadingSubject.send(false)
-            
-            switch result {
-            case .success(let model):
-                self.recivedMovies.append(contentsOf: model.results)
-                self.moviesDidLoadSubject.send()
-            case .failure(let error):
-                print("Error fetching movies: \(error)")
-            }
-        }
-    }
 }
-

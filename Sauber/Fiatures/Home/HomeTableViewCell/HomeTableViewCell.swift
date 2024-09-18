@@ -11,9 +11,10 @@ final class HomeTableViewCell: UITableViewCell {
     
     //MARK: - Properties
     
-    private var model: HomeTableViewCellMovieModel?
+    private var model: [ItemModel]? = []
     private weak var detailsDelegate: HomeTableViewCellDelegate?
     private var section: MovieType?
+    private var cellId = "HomeCollectionViewCell"
     
     private var moviesGenreName: UILabel = {
         let label = UILabel()
@@ -71,7 +72,7 @@ final class HomeTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configuration
-    func configure(with model: HomeTableViewCellMovieModel, delegate: HomeTableViewCellDelegate, for section: MovieType) {
+    func configure(with model: [ItemModel], delegate: HomeTableViewCellDelegate, for section: MovieType) {
         self.detailsDelegate = delegate
         self.model = model
         self.section = section
@@ -79,18 +80,17 @@ final class HomeTableViewCell: UITableViewCell {
         switch section {
         case .movies:
             moviesGenreName.text = "Movies"
-        case .serials:
+        case .series:
             moviesGenreName.text = "Serials"
         }
         collectionView.reloadData()
     }
     
     @objc func buttonClicked(sender : UIButton){
-    
         if section == MovieType.movies {
             detailsDelegate?.seeAllTapped(for: .movies)
-        } else if section == MovieType.serials {
-            detailsDelegate?.seeAllTapped(for: .serials)
+        } else if section == MovieType.series {
+            detailsDelegate?.seeAllTapped(for: .series)
         }
     }
     
@@ -104,7 +104,8 @@ final class HomeTableViewCell: UITableViewCell {
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: "HomeCollectionViewCell")
+        collectionView.register(HomeCollectionViewCell.self,
+                                forCellWithReuseIdentifier: cellId)
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
     }
@@ -113,36 +114,47 @@ final class HomeTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             moviesGenreName.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: 12),
+                constant: 12
+            ),
             moviesGenreName.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             moviesGenreName.trailingAnchor.constraint(
                 equalTo: allMoviesButton.leadingAnchor,
-                constant: -12),
+                constant: -12
+            ),
             moviesGenreName.bottomAnchor.constraint(
-                equalTo: allMoviesButton.bottomAnchor),
+                equalTo: allMoviesButton.bottomAnchor
+            ),
             
             allMoviesButton.topAnchor.constraint(
-                equalTo: contentView.topAnchor, constant: 12),
+                equalTo: contentView.topAnchor, constant: 12
+            ),
             allMoviesButton.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -12),
+                constant: -12
+            ),
             
             collectionView.topAnchor.constraint(
                 equalTo: moviesGenreName.bottomAnchor,
-                constant: 12),
+                constant: 12
+            ),
             collectionView.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: 12),
+                constant: 12
+            ),
             collectionView.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -12),
+                constant: -12
+            ),
             collectionView.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
-                constant: -12),
+                constant: -12
+            ),
             collectionView.heightAnchor.constraint(
-                equalToConstant: 150)
+                equalToConstant: 150
+            )
         ])
     }
 }
@@ -150,15 +162,17 @@ final class HomeTableViewCell: UITableViewCell {
 
 extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        6
+        
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath)
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
         if let homeCollectionViewCell = cell as? HomeCollectionViewCell,
-           let movie = model?.moviesResponse?.results[indexPath.row] {
+           let model = model,
+           indexPath.row < model.count {
             
+            let movie = model[indexPath.row]
             homeCollectionViewCell.configure(with: movie)
         }
         

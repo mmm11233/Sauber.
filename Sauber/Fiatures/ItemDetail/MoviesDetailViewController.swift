@@ -7,14 +7,12 @@ final class MoviesDetailsViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
         return scrollView
     }()
     
     private let scrollViewContent: UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
-        
         return uiView
     }()
     
@@ -25,7 +23,6 @@ final class MoviesDetailsViewController: UIViewController {
         stackView.spacing = 10
         stackView.alignment = .leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return stackView
     }()
     
@@ -33,7 +30,6 @@ final class MoviesDetailsViewController: UIViewController {
         var image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
-        
         return image
     }()
     
@@ -42,7 +38,6 @@ final class MoviesDetailsViewController: UIViewController {
         label.font = .systemFont(ofSize: 30, weight: .bold)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -51,7 +46,6 @@ final class MoviesDetailsViewController: UIViewController {
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -61,7 +55,6 @@ final class MoviesDetailsViewController: UIViewController {
         label.textColor = .gray
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -69,7 +62,9 @@ final class MoviesDetailsViewController: UIViewController {
     
     // MARK: - Initalizer
     
-    init(viewModel: MoviesDetailsViewModelImpl) {
+    init(
+        viewModel: MoviesDetailsViewModelImpl
+    ) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -77,8 +72,6 @@ final class MoviesDetailsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
