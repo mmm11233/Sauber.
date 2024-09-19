@@ -45,6 +45,9 @@ final class HomeViewController: UIViewController {
         setupConstraints()
         setupTableView()
         bindViewModel()
+        
+        viewModel.fetchMovies()
+        viewModel.fetchSeries()
     }
     
     //MARK: - Setup
@@ -77,6 +80,13 @@ final class HomeViewController: UIViewController {
             .store(in: &cancellables)
         
         viewModel.moviesItems
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.seriesItems
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.tableView.reloadData()
@@ -132,7 +142,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension HomeViewController: HomeTableViewCellDelegate {
-    
     func seeAllTapped(for section: MovieType) {
         if section == .movies {
             viewModel.toSelectedItem(section: .movies, from: self)
@@ -141,7 +150,8 @@ extension HomeViewController: HomeTableViewCellDelegate {
         }
     }
     
-    func didSelectRowAt(at index: Int) {
-        viewModel.didSelectRowAt(at: index, from: self)
+    func didSelectRowAt(at index: Int, section: MovieType) {
+        
+        viewModel.didSelectRowAt(at: index, from: self, movieType: section)
     }
 }

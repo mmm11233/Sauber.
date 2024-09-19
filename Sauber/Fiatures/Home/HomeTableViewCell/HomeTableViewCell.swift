@@ -4,7 +4,7 @@ import UIKit
 
 protocol HomeTableViewCellDelegate: AnyObject {
     func seeAllTapped(for section: MovieType)
-    func didSelectRowAt(at index: Int)
+    func didSelectRowAt(at indexPath: Int, section: MovieType)
 }
 
 final class HomeTableViewCell: UITableViewCell {
@@ -185,6 +185,14 @@ extension HomeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        detailsDelegate?.didSelectRowAt(at: indexPath.row)
+        
+        switch section {
+        case .movies:
+            detailsDelegate?.didSelectRowAt(at: indexPath.row, section: .movies)
+        case .series:
+            detailsDelegate?.didSelectRowAt(at: indexPath.row, section: .series)
+        case .none:
+            break
+        }
     }
 }

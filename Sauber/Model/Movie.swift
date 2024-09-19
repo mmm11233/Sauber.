@@ -64,7 +64,7 @@ struct SeriesResponse: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case results, page
-        case totalPages = "total_page"
+        case totalPages = "total_pages"
     }
 }
 
