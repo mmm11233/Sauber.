@@ -1,36 +1,24 @@
 import UIKit
 
 // MARK: - Movies Details View Model Impl
-final class MoviesDetailsViewModelImpl {
-    var selectedMovie: Movie
+final class MoviesDetailsViewModel {
+    var selectedMovie: ItemModel
     
     init(
-        selectedMovie: Movie
+        selectedMovie: ItemModel
     ) {
         self.selectedMovie = selectedMovie
     }
     
     func getTitle() -> String {
-        selectedMovie.originalName ?? ""
+        selectedMovie.originalTitle ?? "empty name"
     }
     
     func getSubtitle() -> String {
-        selectedMovie.name ?? ""
+        selectedMovie.originalLanguage ?? "empty subtitle"
     }
     
     func getDescription() -> String {
         selectedMovie.overview ?? "empty description"
-    }
-    
-    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        func downloadImage(from url: URL,  completion: @escaping (UIImage?) -> Void) {
-            URLSession.shared.dataTask(with: url) { data, _, _ in
-                if let data = data {
-                    completion((UIImage(data: data)))
-                } else {
-                    completion(nil)
-                }
-            }.resume()
-        }
     }
 }

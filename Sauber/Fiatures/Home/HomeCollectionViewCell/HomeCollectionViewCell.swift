@@ -1,6 +1,7 @@
 import UIKit
 
 class HomeCollectionViewCell: UICollectionViewCell {
+    
     //MARK: - Properties
     
     private var movieImage: UIImageView = {
@@ -10,17 +11,14 @@ class HomeCollectionViewCell: UICollectionViewCell {
         image.layer.cornerRadius = 10
         image.layer.masksToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
-        
         return image
     }()
     
     private var movieName: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
-        label.text = "Peaky Blinders"
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -43,27 +41,43 @@ class HomeCollectionViewCell: UICollectionViewCell {
         addSubview(movieName)
     }
     
-    func configure(with model: Movie) {
+    func configure(with model: ItemModel) {
         movieName.text = model.originalName
-        movieImage.image = model.posterPath?.image
-        if let posterPath = model.posterPath,
-           let url = URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)") {
-            movieImage.loadImage(from: url)
-        }
+        movieImage.loadImageUsingCacheWithURL(posterPath: model.posterPath)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            movieImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            movieImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            movieImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            movieImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            movieImage.heightAnchor.constraint(equalToConstant: 150),
-            movieImage.widthAnchor.constraint(equalToConstant: 100),
+            movieImage.topAnchor.constraint(
+                equalTo: contentView.topAnchor
+            ),
+            movieImage.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor
+            ),
+            movieImage.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor
+            ),
+            movieImage.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor
+            ),
+            movieImage.heightAnchor.constraint(
+                equalToConstant: 150
+            ),
+            movieImage.widthAnchor.constraint(
+                equalToConstant: 100
+            ),
             
-            movieName.bottomAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: -10),
-            movieName.leadingAnchor.constraint(equalTo: movieImage.leadingAnchor, constant: 10),
-            movieName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            movieName.bottomAnchor.constraint(
+                equalTo: movieImage.bottomAnchor,
+                constant: -10
+            ),
+            movieName.leadingAnchor.constraint(
+                equalTo: movieImage.leadingAnchor,
+                constant: 10
+            ),
+            movieName.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor
+            )
         ])
     }
 }

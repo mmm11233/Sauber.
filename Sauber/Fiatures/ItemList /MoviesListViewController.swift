@@ -1,19 +1,18 @@
 import UIKit
 import Combine
 
-final class HomeViewController: UIViewController {
+final class MoviesListViewController: UIViewController {
     
     //MARK: - Properties
     
-    private let viewModel: HomeViewModel
+    private var viewModel: MoviesListViewModel
     private var cancellables = Set<AnyCancellable>()
-    private let cellId = "HomeTableViewCell"
+    private let cellId = "MoviesListTableViewCell"
     
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
         return tableView
     }()
     
@@ -28,7 +27,7 @@ final class HomeViewController: UIViewController {
     // MARK: - Initalizer
     
     init(
-        viewModel: HomeViewModel
+        viewModel: MoviesListViewModel
     ) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -40,29 +39,14 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Home"
+        navigationItem.title = viewModel.itemType.title
         setupView()
         setupConstraints()
         setupTableView()
         bindViewModel()
-        
-        viewModel.fetchMovies()
-        viewModel.fetchSeries()
     }
     
     //MARK: - Setup
-    
-    private func setupView() {
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        view.addSubview(errorView)
-        NSLayoutConstraint.activate([
-            errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            errorView.widthAnchor.constraint(equalToConstant: 120),
-            errorView.heightAnchor.constraint(equalToConstant: 80)
-        ])
-    }
     
     private func bindViewModel() {
         viewModel.$fetchingState
@@ -79,79 +63,74 @@ final class HomeViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.moviesItems
+        viewModel.moviesDidLoadPublisher
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.tableView.reloadData()
-            }
-            .store(in: &cancellables)
-        
-        viewModel.seriesItems
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] in
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
     }
     
+    private func setupView() {
+        view.backgroundColor = .white
+        navigationItem.title = "Movies List"
+        view.addSubview(tableView)
+    }
+    
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate ([
             tableView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: 10
+                equalTo: view.safeAreaLayoutGuide.topAnchor
             ),
             tableView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12
+                equalTo: view.leadingAnchor
             ),
             tableView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -12
+                equalTo: view.trailingAnchor
             ),
             tableView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -12
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor
             )
         ])
     }
     
-    private func setupTableView() {
+    private  func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(MoviesListTableViewCell.self,
+                           forCellReuseIdentifier: cellId)
     }
 }
+
 // MARK: - Table View Data Source And Delegate
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRowsInSection()
+        viewModel.items.count
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.items.count - 1,
+           viewModel.currentPage < viewModel.totalPages {
+            viewModel.refreshData()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        
-        if let homeCell = cell as? HomeTableViewCell,
-           let movieType = MovieType(rawValue: indexPath.item),
-           let movie = viewModel.item(at: indexPath.row, in: movieType) {
-            homeCell.configure(with: movie, delegate: self, for: movieType)
+        guard let moviesListTableViewCell = cell as? MoviesListTableViewCell else {
+            fatalError("Unexpected cell type: \(cell)")
         }
         
-        return cell
-    }
-}
-
-extension HomeViewController: HomeTableViewCellDelegate {
-    func seeAllTapped(for section: MovieType) {
-        if section == .movies {
-            viewModel.toSelectedItem(section: .movies, from: self)
-        } else if section == .series {
-            viewModel.toSelectedItem(section: .series, from: self)
-        }
+        let movie = viewModel.items[indexPath.row]
+        moviesListTableViewCell.configure(with: movie)
+        
+        return moviesListTableViewCell
     }
     
-    func didSelectRowAt(at index: Int, section: MovieType) {
-        
-        viewModel.didSelectRowAt(at: index, from: self, movieType: section)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
+        let movie = viewModel.items[indexPath.row]
+        let moviesDetailsViewModel = MoviesDetailFactory.makeViewController(itemModel: movie)
+        navigationController?.pushViewController(moviesDetailsViewModel, animated: true)
     }
 }
