@@ -107,9 +107,8 @@ extension HomeViewModel: HomeViewModelProviding {
             selectedValue = seriesItemSubject.value[index]
         }
         
-        let viewModel = MoviesDetailsViewModelImpl(selectedMovie: selectedValue)
-        let vc = MoviesDetailsViewController(viewModel: viewModel)
-        viewController.navigationController?.pushViewController(vc, animated: true)
+        let moviesDetailsViewModel = MoviesDetailFactory.makeViewController(itemModel: selectedValue)
+        viewController.navigationController?.pushViewController(moviesDetailsViewModel, animated: true)
     }
 }
 

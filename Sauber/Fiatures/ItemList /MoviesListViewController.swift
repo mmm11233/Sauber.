@@ -130,7 +130,7 @@ extension MoviesListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
         let movie = viewModel.items[indexPath.row]
-        
-        navigationController?.pushViewController(MoviesDetailsViewController(viewModel: MoviesDetailsViewModelImpl(selectedMovie: movie)), animated: true)
+        let moviesDetailsViewModel = MoviesDetailFactory.makeViewController(itemModel: movie)
+        navigationController?.pushViewController(moviesDetailsViewModel, animated: true)
     }
 }

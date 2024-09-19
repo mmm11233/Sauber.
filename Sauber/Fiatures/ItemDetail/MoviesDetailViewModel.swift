@@ -1,7 +1,7 @@
 import UIKit
 
 // MARK: - Movies Details View Model Impl
-final class MoviesDetailsViewModelImpl {
+final class MoviesDetailsViewModel {
     var selectedMovie: ItemModel
     
     init(
