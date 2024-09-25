@@ -45,6 +45,7 @@ struct Movie: Decodable {
 extension Movie {
     func toItemModel() -> ItemModel {
         ItemModel.init(
+            id: id,
             originalLanguage: originalLanguage,
             originalName: originalName,
             overview: overview,
@@ -69,6 +70,7 @@ struct SeriesResponse: Decodable {
 }
 
 struct Series: Decodable {
+    let id: Int
     let originalLanguage: String?
     let originalName: String?
     let overview: String?
@@ -79,6 +81,7 @@ struct Series: Decodable {
     let voteAverage: Double
     
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case originalLanguage = "original_language"
         case originalName = "original_name"
         case overview = "overview"
@@ -94,6 +97,7 @@ struct Series: Decodable {
 extension Series {
     func toItemModel() -> ItemModel {
         ItemModel.init(
+            id: id,
             originalLanguage: originalLanguage,
             originalName: originalName,
             overview: overview,

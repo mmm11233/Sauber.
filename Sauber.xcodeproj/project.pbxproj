@@ -26,6 +26,7 @@
 		39D435FC2C9B91280078F5E9 /* HomeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D435FB2C9B91280078F5E9 /* HomeFactory.swift */; };
 		39D435FE2C9B919B0078F5E9 /* MoviesListFacotry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D435FD2C9B919B0078F5E9 /* MoviesListFacotry.swift */; };
 		39D436002C9C790C0078F5E9 /* MoviesDetailFactory .swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D435FF2C9C790C0078F5E9 /* MoviesDetailFactory .swift */; };
+		39D436042CA349F70078F5E9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D436032CA349F70078F5E9 /* HomeView.swift */; };
 		39E012512C98E7E300E3096F /* MovieType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E012502C98E7E300E3096F /* MovieType.swift */; };
 		39EB15842C636EAE00C12DFA /* EndpointRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EB15832C636EAE00C12DFA /* EndpointRepository.swift */; };
 		39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */; };
@@ -54,6 +55,7 @@
 		39D435FB2C9B91280078F5E9 /* HomeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFactory.swift; sourceTree = "<group>"; };
 		39D435FD2C9B919B0078F5E9 /* MoviesListFacotry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListFacotry.swift; sourceTree = "<group>"; };
 		39D435FF2C9C790C0078F5E9 /* MoviesDetailFactory .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoviesDetailFactory .swift"; sourceTree = "<group>"; };
+		39D436032CA349F70078F5E9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		39E012502C98E7E300E3096F /* MovieType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieType.swift; sourceTree = "<group>"; };
 		39EB15832C636EAE00C12DFA /* EndpointRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointRepository.swift; sourceTree = "<group>"; };
 		39F7260D2C655E8B00E3C5F8 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		397EA30A2C635B520020FE9D /* Sauber */ = {
 			isa = PBXGroup;
 			children = (
+				39D436022CA349BC0078F5E9 /* HomeSwiftUI */,
 				39F7260B2C65507C00E3C5F8 /* Application */,
 				3915B1402C731F4F00EFEE76 /* Model */,
 				39EB15852C637FCD00C12DFA /* Fiatures */,
@@ -127,6 +130,14 @@
 				39C392A02C888DBA00751A9B /* ListService.swift */,
 			);
 			path = MoviesService;
+			sourceTree = "<group>";
+		};
+		39D436022CA349BC0078F5E9 /* HomeSwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				39D436032CA349F70078F5E9 /* HomeView.swift */,
+			);
+			path = HomeSwiftUI;
 			sourceTree = "<group>";
 		};
 		39EB157E2C636E2700C12DFA /* Networking */ = {
@@ -289,6 +300,7 @@
 				39F726112C66AC4C00E3C5F8 /* HomeCollectionViewCell.swift in Sources */,
 				39D436002C9C790C0078F5E9 /* MoviesDetailFactory .swift in Sources */,
 				3915B1462C751B8C00EFEE76 /* HomeViewModel.swift in Sources */,
+				39D436042CA349F70078F5E9 /* HomeView.swift in Sources */,
 				3915B13D2C731E5B00EFEE76 /* NetworkError.swift in Sources */,
 				39F7260E2C655E8B00E3C5F8 /* HomeTableViewCell.swift in Sources */,
 				39C392A12C888DBA00751A9B /* ListService.swift in Sources */,

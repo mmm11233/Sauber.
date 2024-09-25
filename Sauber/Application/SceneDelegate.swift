@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -6,14 +7,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let someScene = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        window = UIWindow(windowScene: someScene)
-        
-        let homeViewController = HomeFactory.makeViewController()
-        let someNavigationController = UINavigationController(rootViewController: homeViewController)
-        window?.rootViewController = someNavigationController
-        window?.makeKeyAndVisible()
+        let homeView = HomeFactory.makeViewController()
+        let window = UIWindow(windowScene: windowScene)
+
+        window.rootViewController = UIHostingController(rootView: homeView)
+        self.window = window
+        window.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

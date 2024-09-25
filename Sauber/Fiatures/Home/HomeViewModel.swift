@@ -13,7 +13,7 @@ protocol HomeViewModelProviding {
     func fetchSeries()
 }
 
-final class HomeViewModel {
+final class HomeViewModel: ObservableObject {
     
     //MARK: - Properties
     
@@ -28,6 +28,7 @@ final class HomeViewModel {
     // MARK: - Dependencies
     
     private let listService: ListService
+    @Published var movies: [ItemModel] = []
     
     //MARK: - Init
     
@@ -40,16 +41,18 @@ final class HomeViewModel {
     }
 }
 
-private extension HomeViewModel {
-    func handleApiResponse(_ result: Result<[ItemModel], Error>, subject: CurrentValueSubject<[ItemModel], Error>) {
-        switch result {
-        case .success(let items):
-            subject.send(items)
-            fetchingState = .finished
-        case .failure(let error):
-            fetchingState = .error(error)
-        }
-    }
+ extension HomeViewModel {
+     func handleApiResponse(_ result: Result<[ItemModel], Error>, subject: CurrentValueSubject<[ItemModel], Error>) {
+         DispatchQueue.main.async {
+             switch result {
+             case .success(let items):
+                 subject.send(items)
+                 self.fetchingState = .finished
+             case .failure(let error):
+                 self.fetchingState = .error(error)
+             }
+         }
+     }
 }
 
 
@@ -58,14 +61,19 @@ extension HomeViewModel: HomeViewModelProviding {
     func fetchMovies() {
         fetchingState = .loading
         listService.fetchMovies(page: 1) { [weak self] result in
-            self?.handleApiResponse(result, subject: self?.moviesItemSubject ?? CurrentValueSubject([]))
+            DispatchQueue.main.async {
+                self?.handleApiResponse(result, subject: self?.moviesItemSubject ?? CurrentValueSubject([]))
+            }
         }
     }
     
     func fetchSeries() {
         fetchingState = .loading
         listService.fetchSeries(page: 1) { [weak self] result in
-            self?.handleApiResponse(result, subject: self?.seriesItemSubject ?? CurrentValueSubject([]))
+            DispatchQueue.main.async {
+                self?.handleApiResponse(result, subject: self?.seriesItemSubject ?? CurrentValueSubject([]))
+                
+            }
         }
     }
     
