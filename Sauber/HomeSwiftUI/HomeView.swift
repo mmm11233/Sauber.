@@ -2,8 +2,16 @@ import SwiftUI
 import Combine
 
 struct HomeView: View {
+    
+    // MARK: - Properties
+    
     @ObservedObject var viewModel: HomeViewModel
     private var cancellables = Set<AnyCancellable>()
+    private var gridItems: [GridItem] {
+        [GridItem(.fixed(200), spacing: 16)]
+    }
+    
+    // MARK: - Int
     
     public init(
         viewModel: HomeViewModel
@@ -14,54 +22,96 @@ struct HomeView: View {
                 viewModel.movies = movies
             }
             .store(in: &cancellables)
+        
+        self.viewModel.seriesItems
+            .sink { series in
+                viewModel.series = series
+            }
+            .store(in: &cancellables)
     }
     
-    private var items: [GridItem] {
-        Array(repeating: .init(.adaptive(minimum: 120)), count: 2)
-    }
-    
-    let rows = [
-        GridItem(.fixed(50))
-    ]
+    // MARK: - Body
     
     var body: some View {
-        VStack(){
-            HStack(alignment: .top, spacing: 180) {
-                Text("Movies")
-                    .font(.system(size: 30))
-                    .fontWeight(.bold)
-                Button(action: {}) {Text("See all").underline()}
-                    .font(.system(size: 20, weight: .bold)).foregroundColor(.black)
-                    .padding(.top, 6)
+        List {
+            Section(header: section(title: "Movies", action: {
+                print("See all Movies tapped")
+            })) {
+                moviesGridView
             }
-           
-            moviesGridView
+            Section(header: section(title: "Series", action: {
+                print("See all Series tapped")
+            })) {
+                seriesGridView
+            }
         }
-        .padding(.top, 10)
     }
-    
+    // MARK: - Views
     
     private var moviesGridView: some View {
         ScrollView(.horizontal) {
-            LazyHGrid(rows: rows, spacing: 0){
+            LazyHGrid(rows: gridItems, spacing: 16){
                 ForEach(viewModel.movies) { result in
                     VStack{
                         AsyncImage(url: URL(string: "\(EndpointRepository.imageBaseURL)\(result.posterPath ?? "")")) {image in
                             image
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 200, height: 200)
+                                .frame(width: 100, height: 140)
                         } placeholder: {
                             ProgressView()
                         }
                         Text(result.originalTitle ?? "")
                             .font(.headline)
+                            .frame(width: 100)
+                            .lineLimit(1)
+                    
                     }
-                    .frame(width: 200)
+                    .padding(.horizontal, 8)
                 }
             }
-            .padding(.top, 10)
+            .frame(height: 200)
         }
-        .padding(.top, 10)
+    }
+    
+    private var seriesGridView: some View {
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: gridItems, spacing: 16) {
+                ForEach(viewModel.series) { result in
+                    VStack {
+                        AsyncImage(url: URL(string: "\(EndpointRepository.imageBaseURL)\(result.posterPath ?? "")")) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 140)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        Text(result.originalName ?? "")
+                            .font(.headline)
+                            .frame(width: 100)
+                            .lineLimit(1)
+                    }
+                    .padding(.horizontal, 8)
+                }
+            }
+            .frame(height: 200)
+        }
+    }
+    
+    // MARK: - Functions
+    private func section(title: String, action: @escaping() -> Void) -> some View {
+        HStack{
+            Text(title)
+                .font(.system(size: 24, weight: .bold))
+                .foregroundColor(.black)
+                .fontWeight(.bold)
+            Spacer()
+            Button(action: action) {
+                Text("See all").underline()
+            }
+            .font(.system(size: 18, weight: .bold))
+            .foregroundColor(.black)
+        }
     }
 }

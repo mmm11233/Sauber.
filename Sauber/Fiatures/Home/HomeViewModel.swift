@@ -29,7 +29,8 @@ final class HomeViewModel: ObservableObject {
     
     private let listService: ListService
     @Published var movies: [ItemModel] = []
-    
+    @Published var series: [ItemModel] = []
+ 
     //MARK: - Init
     
     init(
