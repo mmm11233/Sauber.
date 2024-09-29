@@ -117,7 +117,6 @@
 		397EA30A2C635B520020FE9D /* Sauber */ = {
 			isa = PBXGroup;
 			children = (
-				39D436022CA349BC0078F5E9 /* HomeSwiftUI */,
 				39F7260B2C65507C00E3C5F8 /* Application */,
 				3915B1402C731F4F00EFEE76 /* Model */,
 				39EB15852C637FCD00C12DFA /* Fiatures */,
@@ -135,13 +134,6 @@
 				39C392A02C888DBA00751A9B /* ListService.swift */,
 			);
 			path = MoviesService;
-			sourceTree = "<group>";
-		};
-		39D436022CA349BC0078F5E9 /* HomeSwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HomeSwiftUI;
 			sourceTree = "<group>";
 		};
 		39EB157E2C636E2700C12DFA /* Networking */ = {

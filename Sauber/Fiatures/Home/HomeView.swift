@@ -33,19 +33,26 @@ struct HomeView: View {
     // MARK: - Body
     
     var body: some View {
-          NavigationStack {
-              List {
-                  Section(header: section(title: "Movies", destination: MoviesListView(movies: viewModel.movies))) {
-                      moviesGridView
-                  }
-                  
-                  Section(header: section(title: "Series", destination: MoviesListView(movies: viewModel.series))) {
-                      seriesGridView
-                  }
-              }
-          }
-      }
-
+        NavigationStack {
+            List {
+                Section(header: section(title: "Movies", destination: MoviesListView(movies: viewModel.movies))) {
+                    moviesGridView
+                }
+                
+                Section(header: section(title: "Series", destination: MoviesListView(movies: viewModel.series))) {
+                    seriesGridView
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Home")
+                        .font(.system(size: 24))
+                        .fontWeight(.bold)
+                }
+            }
+        }
+    }
+    
     // MARK: - Views
     
     private var moviesGridView: some View {
@@ -74,7 +81,6 @@ struct HomeView: View {
             .frame(height: 200)
         }
     }
-    
     
     private var seriesGridView: some View {
         ScrollView(.horizontal) {
@@ -107,9 +113,9 @@ struct HomeView: View {
     private func section(title: String, destination: some View) -> some View {
         HStack {
             Text(title)
-                .font(.system(size: 24, weight: .bold))
+                .font(.system(size: 22, weight: .bold))
                 .foregroundColor(.black)
-                .fontWeight(.bold)
+                .fontWeight(.medium)
             Spacer()
             NavigationLink(destination: destination) {
                 Text("See all").underline()
