@@ -6,9 +6,8 @@ struct HomeView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: HomeViewModel
-    private var cancellables = Set<AnyCancellable>()
     private var gridItems: [GridItem] {
-        [GridItem(.fixed(200), spacing: 16)]
+        [GridItem(.adaptive(minimum: 100), spacing: 16)]
     }
     
     // MARK: - Int
@@ -17,17 +16,6 @@ struct HomeView: View {
         viewModel: HomeViewModel
     ) {
         self.viewModel = viewModel
-        self.viewModel.moviesItems
-            .sink { movies in
-                viewModel.movies = movies
-            }
-            .store(in: &cancellables)
-        
-        self.viewModel.seriesItems
-            .sink { series in
-                viewModel.series = series
-            }
-            .store(in: &cancellables)
     }
     
     // MARK: - Body
@@ -72,7 +60,7 @@ struct HomeView: View {
                             Text(result.originalTitle ?? "")
                                 .font(.headline)
                                 .frame(width: 100)
-                                .lineLimit(1)
+                                .multilineTextAlignment(.center)
                         }
                         .padding(.horizontal, 8)
                     }
@@ -99,7 +87,7 @@ struct HomeView: View {
                             Text(result.originalName ?? "")
                                 .font(.headline)
                                 .frame(width: 100)
-                                .lineLimit(1)
+                                .multilineTextAlignment(.center)
                         }
                         .padding(.horizontal, 8)
                     }

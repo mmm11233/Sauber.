@@ -19,7 +19,6 @@
 		396E79E52C91AEC200285984 /* MoviesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396E79E42C91AEC200285984 /* MoviesListTableViewCell.swift */; };
 		397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30B2C635B520020FE9D /* AppDelegate.swift */; };
 		397EA30E2C635B520020FE9D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30D2C635B520020FE9D /* SceneDelegate.swift */; };
-		397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397EA30F2C635B520020FE9D /* HomeViewController.swift */; };
 		397EA3152C635B540020FE9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 397EA3142C635B540020FE9D /* Assets.xcassets */; };
 		397EA3182C635B540020FE9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 397EA3162C635B540020FE9D /* LaunchScreen.storyboard */; };
 		39C392952C7BC96400751A9B /* MoviesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C392942C7BC96400751A9B /* MoviesDetailViewController.swift */; };
@@ -49,7 +48,6 @@
 		397EA3082C635B520020FE9D /* Sauber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sauber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		397EA30B2C635B520020FE9D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		397EA30D2C635B520020FE9D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		397EA30F2C635B520020FE9D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		397EA3142C635B540020FE9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		397EA3172C635B540020FE9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		397EA3192C635B540020FE9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				39F7260F2C66AC1300E3C5F8 /* HomeCollectionViewCell */,
 				39F7260C2C65591500E3C5F8 /* HomeTableViewCell */,
 				39D436032CA349F70078F5E9 /* HomeView.swift */,
-				397EA30F2C635B520020FE9D /* HomeViewController.swift */,
 				3915B1452C751B8C00EFEE76 /* HomeViewModel.swift */,
 				39D435FB2C9B91280078F5E9 /* HomeFactory.swift */,
 			);
@@ -304,7 +301,6 @@
 				39C392A12C888DBA00751A9B /* ListService.swift in Sources */,
 				391669FC2CA8079500B4C111 /* MoviesListView.swift in Sources */,
 				396E79E32C91AEAD00285984 /* MoviesListViewController.swift in Sources */,
-				397EA3102C635B520020FE9D /* HomeViewController.swift in Sources */,
 				3915B1422C731F6B00EFEE76 /* Movie.swift in Sources */,
 				397EA30C2C635B520020FE9D /* AppDelegate.swift in Sources */,
 				397EA30E2C635B520020FE9D /* SceneDelegate.swift in Sources */,
