@@ -23,11 +23,15 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(header: section(title: "Movies", destination: MoviesListView(movies: viewModel.movies))) {
+                Section(header: section(title: "Movies",
+                                        destination: MoviesListFactory.makeView(items: viewModel.movies, type: .movies)
+                                       )) {
                     moviesGridView
                 }
                 
-                Section(header: section(title: "Series", destination: MoviesListView(movies: viewModel.series))) {
+                Section(header: section(title: "Series",
+                                        destination: MoviesListFactory.makeView(items: viewModel.series, type: .series)
+                                       )) {
                     seriesGridView
                 }
             }
@@ -59,7 +63,9 @@ struct HomeView: View {
                             }
                             Text(result.originalTitle ?? "")
                                 .font(.headline)
+                                .foregroundColor(Color.black)
                                 .frame(width: 100)
+                                .lineLimit(1)
                                 .multilineTextAlignment(.center)
                         }
                         .padding(.horizontal, 8)
@@ -86,6 +92,7 @@ struct HomeView: View {
                             }
                             Text(result.originalName ?? "")
                                 .font(.headline)
+                                .foregroundColor(Color.black)
                                 .frame(width: 100)
                                 .multilineTextAlignment(.center)
                         }

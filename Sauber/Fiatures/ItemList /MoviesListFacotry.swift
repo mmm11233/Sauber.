@@ -1,11 +1,13 @@
 import UIKit
 
 struct MoviesListFactory {
-    static func makeViewController(items: [ItemModel], with itemType: MovieType) -> UIViewController {
+    static func makeView(
+        items: [ItemModel],
+        type: MovieType
+    ) -> MoviesListView {
         let networkManager = NetworkManager()
-        let service = ListService(apiService: networkManager)
-        let viewModel = MoviesListViewModel(items: items, itemType: itemType, networkManager: networkManager)
+        let viewModel = MoviesListViewModel(items: items, itemType: type, networkManager: networkManager)
         
-        return MoviesListViewController(viewModel: viewModel)
+        return MoviesListView(viewModel: viewModel)
     }
 }

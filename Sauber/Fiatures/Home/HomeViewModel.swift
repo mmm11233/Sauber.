@@ -54,7 +54,6 @@ extension HomeViewModel {
 
 
 extension HomeViewModel {
-    
     func fetchMovies() {
         fetchingState = .loading
         listService.fetchMovies(page: 1) { [weak self] result in
@@ -74,7 +73,20 @@ extension HomeViewModel {
     }
 }
 
-enum FetchingState {
+enum FetchingState: Equatable {
+    static func ==(lhs: FetchingState, rhs: FetchingState) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading):
+            return true
+        case (.finished, .finished):
+            return true
+        case (.error(let lhsError), .error(let rhsError)):
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        default:
+            return false
+        }
+    }
+    
     case loading
     case finished
     case error(Error)

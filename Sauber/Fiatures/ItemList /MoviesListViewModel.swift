@@ -1,13 +1,10 @@
 import UIKit
 import Combine
 
-final class MoviesListViewModel {
+final class MoviesListViewModel: ObservableObject {
     
     //MARK: - Properties
-    
     @Published var fetchingState: FetchingState = .finished
-    private let moviesDidLoadSubject: PassthroughSubject<Void, Never> = .init()
-    var moviesDidLoadPublisher: AnyPublisher<Void, Never> { moviesDidLoadSubject.eraseToAnyPublisher() }
     
     var currentPage = 1
     var totalPages = 5
@@ -33,31 +30,35 @@ final class MoviesListViewModel {
     //MARK: - Fetch Data
     
     func refreshData() {
+        self.fetchingState = .loading
+        
         switch itemType {
         case .movies:
             ListService(apiService: networkManager).fetchMovies(page: currentPage) { [ weak self ] result in
                 guard let self = self else { return }
-                switch result {
-                case .success(let model):
-                    self.items.append(contentsOf: model)
-                    self.moviesDidLoadSubject.send()
-                    self.fetchingState = .finished
-                case .failure(let error):
-                    print("Error fetching movies: \(error)")
-                    self.fetchingState = .error(error)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let model):
+                        self.items.append(contentsOf: model)
+                        self.fetchingState = .finished
+                    case .failure(let error):
+                        print("Error fetching movies: \(error)")
+                        self.fetchingState = .error(error)
+                    }
                 }
             }
         case .series:
             ListService(apiService: networkManager).fetchSeries(page: currentPage) { [ weak self ] result in
                 guard let self = self else { return }
-                switch result {
-                case .success(let model):
-                    self.items.append(contentsOf: model)
-                    self.moviesDidLoadSubject.send()
-                    self.fetchingState = .finished
-                case .failure(let error):
-                    print("Error fetching movies: \(error)")
-                    self.fetchingState = .error(error)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let model):
+                        self.items.append(contentsOf: model)
+                        self.fetchingState = .finished
+                    case .failure(let error):
+                        print("Error fetching movies: \(error)")
+                        self.fetchingState = .error(error)
+                    }
                 }
             }
         }
