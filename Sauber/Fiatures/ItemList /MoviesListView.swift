@@ -4,36 +4,34 @@ struct MoviesListView: View {
     let movies: [ItemModel]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(movies) { movie in
-                HStack() {
-                    AsyncImage(url: URL(string: "\(EndpointRepository.imageBaseURL)\(movie.posterPath ?? "")")) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 140)
-                    } placeholder: {
-                        ProgressView()
+                NavigationLink(destination: DetailsView(movie: movie)) {
+                    HStack {
+                        AsyncImage(url: URL(string: "\(EndpointRepository.imageBaseURL)\(movie.posterPath ?? "")")) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 140)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(movie.originalTitle ?? "Unknown Title")
+                                .font(.headline)
+                                .lineLimit(1)
+                            Text("Rating - \(Int(movie.popularity))")
+                                .font(.subheadline)
+                                .lineLimit(1)
+                            Text(movie.overview ?? "No Overview Available")
+                                .font(.body)
+                                .lineLimit(3)
+                        }
                     }
-                    VStack( spacing: 4) {
-                        Text(movie.originalTitle ?? "")
-                            .font(.title)
-                            .frame(maxWidth: .infinity, alignment: .bottomLeading)
-                            .lineLimit(1)
-                        Text("Rating - \(movie.popularity)")
-                            .font(.title3)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .lineLimit(3)
-                        Text(movie.overview ?? "")
-                            .font(.title3)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .lineLimit(3)
-                    }
+                    .frame(minHeight: 160)
                 }
-                .frame(height: 160)
             }
+            .navigationTitle("Movies List")
         }
-        .navigationTitle(Text("List"))
-        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.large)
     }
 }
