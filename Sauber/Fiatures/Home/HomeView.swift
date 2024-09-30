@@ -25,16 +25,20 @@ struct HomeView: View {
             List {
                 Section(header: section(title: "Movies",
                                         destination: MoviesListFactory.makeView(items: viewModel.movies, type: .movies)
-                                       )) {
+                                       ))
+                
+                 {
                     moviesGridView
                 }
                 
                 Section(header: section(title: "Series",
                                         destination: MoviesListFactory.makeView(items: viewModel.series, type: .series)
-                                       )) {
+                                       ))
+                 {
                     seriesGridView
                 }
             }
+            .padding(.top, -60)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Home")
@@ -49,7 +53,7 @@ struct HomeView: View {
     
     private var moviesGridView: some View {
         ScrollView(.horizontal) {
-            LazyHGrid(rows: gridItems, spacing: 16) {
+            LazyHGrid(rows: gridItems, spacing: 10) {
                 ForEach(viewModel.movies) { result in
                     NavigationLink(destination: DetailsView(movie: result)) {
                         VStack {
@@ -57,7 +61,7 @@ struct HomeView: View {
                                 image
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 100, height: 140)
+                                    .frame(width: 100, height: 130)
                             } placeholder: {
                                 ProgressView()
                             }
@@ -86,12 +90,13 @@ struct HomeView: View {
                                 image
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 100, height: 140)
+                                    .frame(width: 100, height: 130)
                             } placeholder: {
                                 ProgressView()
                             }
                             Text(result.originalName ?? "")
                                 .font(.headline)
+                                .lineLimit(1)
                                 .foregroundColor(Color.black)
                                 .frame(width: 100)
                                 .multilineTextAlignment(.center)
