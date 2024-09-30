@@ -69,7 +69,8 @@ extension UIImageView {
     }
 }
 
-struct ItemModel {
+struct ItemModel: Identifiable {
+    var id: Int
     let originalLanguage: String?
     let originalName: String?
     let overview: String?
@@ -81,6 +82,7 @@ struct ItemModel {
     
     
     init(
+        id: Int,
         originalLanguage: String?,
         originalName: String?,
         overview: String?,
@@ -90,6 +92,7 @@ struct ItemModel {
         originalTitle: String?,
         voteAverage: Double
     ) {
+        self.id = id
         self.originalLanguage = originalLanguage
         self.originalName = originalName
         self.overview = overview
@@ -101,6 +104,7 @@ struct ItemModel {
     }
     
     init(with item: Movie) {
+        id = item.id
         originalLanguage = item.originalLanguage
         originalName = item.originalName
         name = item.name ?? ""
@@ -112,6 +116,7 @@ struct ItemModel {
     }
     
     init(with item: Series) {
+        id = item.id
         originalLanguage = item.originalLanguage
         originalName = item.originalName
         name = item.name ?? ""
