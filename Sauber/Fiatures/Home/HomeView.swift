@@ -25,20 +25,20 @@ struct HomeView: View {
             List {
                 Section(header: section(title: "Movies",
                                         destination: MoviesListFactory.makeView(items: viewModel.movies, type: .movies)
-                                       ))
-                
-                 {
+                                       )
+                    .padding(.top, -20)) {
                     moviesGridView
                 }
                 
                 Section(header: section(title: "Series",
                                         destination: MoviesListFactory.makeView(items: viewModel.series, type: .series)
-                                       ))
+                                       )
+                    .padding(.top, -20))
                  {
                     seriesGridView
                 }
             }
-            .padding(.top, -60)
+            .padding(-10)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Home")
